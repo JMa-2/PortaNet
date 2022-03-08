@@ -1,0 +1,8 @@
+- small i2c OLED
+- antenna for wifi
+- jtag connector
+- screw hole 
+- uart pins to USB DP/DN for UART programming
+- 3.3V regulator
+- need to buy stencils
+- jtag programmer esp-prog
