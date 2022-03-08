@@ -24,4 +24,10 @@
     (path "/" (page "1"))
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7" (page "2"))
   )
+
+  (symbol_instances
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/b97ff70e-3997-4b11-bc73-1102f98616a3"
+      (reference "U?") (unit 1) (value "ESP32-C3") (footprint "Package_DFN_QFN:QFN-32-1EP_5x5mm_P0.5mm_EP3.7x3.7mm_ThermalVias")
+    )
+  )
 )
