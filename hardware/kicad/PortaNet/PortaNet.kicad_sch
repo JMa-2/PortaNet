@@ -20,17 +20,81 @@
     )
   )
 
+  (sheet (at 39.37 47.625) (size 34.29 10.16) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid) (color 0 0 0 0))
+    (fill (color 0 0 0 0.0000))
+    (uuid 5873cb1d-2980-4d04-84de-c428523b74e7)
+    (property "Sheet name" "misc1" (id 0) (at 39.37 46.9134 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheet file" "misc1.kicad_sch" (id 1) (at 39.37 58.3696 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+  )
+
   (sheet_instances
     (path "/" (page "1"))
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7" (page "2"))
+    (path "/5873cb1d-2980-4d04-84de-c428523b74e7" (page "3"))
   )
 
   (symbol_instances
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/b956589f-9db6-424e-b8ba-0903b7f520ec"
+      (reference "#PWR0101") (unit 1) (value "GND") (footprint "")
+    )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/65235f14-32b1-40c3-9f6b-21412c001e81"
-      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+      (reference "#PWR0102") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/3045ca6f-6303-47ce-9efc-bca23d998961"
+      (reference "#PWR0103") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/fff88ac9-0aea-4d3f-8e5a-1f9d4618c83b"
+      (reference "#PWR0104") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/7211f8d4-62b0-4c2b-a370-dcb9b31c2fcd"
+      (reference "#PWR0105") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/5873cb1d-2980-4d04-84de-c428523b74e7/78978477-abfe-400a-be9d-d34caba8ef08"
+      (reference "#PWR0106") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/5873cb1d-2980-4d04-84de-c428523b74e7/4fc5c441-8476-4709-8595-a6075bf2d580"
+      (reference "#PWR0107") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/0f71d965-26d5-42e8-b8da-c7f912ad95c8"
+      (reference "C?") (unit 1) (value "0.1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/3295f611-6ce3-4ca8-b291-32848720480c"
+      (reference "C?") (unit 1) (value "0.1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/7416e59d-d321-429d-bdc1-ea2653465baf"
+      (reference "C?") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
+    (path "/5873cb1d-2980-4d04-84de-c428523b74e7/807215d9-1c49-4932-ac74-264d93dcfa83"
+      (reference "C?") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/89428f88-23f1-4263-88c8-56bdcc2e25c3"
+      (reference "C?") (unit 1) (value "0.1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/b497ac16-865d-4d08-a87b-14900ca1427d"
+      (reference "C?") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/b58b5d5e-bfc9-40cb-897c-7cabd57af31d"
+      (reference "C?") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/cfad5c7d-b13d-4d54-9917-ceea16583277"
+      (reference "C?") (unit 1) (value "0.1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
+    (path "/5873cb1d-2980-4d04-84de-c428523b74e7/f18d7b7b-e771-4659-b7d2-4766cb7b211d"
+      (reference "C?") (unit 1) (value ".1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/f65d786d-fc9d-482b-bb95-2977674749d8"
+      (reference "C?") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/b97ff70e-3997-4b11-bc73-1102f98616a3"
       (reference "U?") (unit 1) (value "ESP32-C3") (footprint "Package_DFN_QFN:QFN-32-1EP_5x5mm_P0.5mm_EP3.7x3.7mm_ThermalVias")
+    )
+    (path "/5873cb1d-2980-4d04-84de-c428523b74e7/f607fb80-96f7-4a77-bfa8-4b29c1d49858"
+      (reference "U?") (unit 1) (value "AP2114HA-3.3TRG1") (footprint "Package_TO_SOT_SMD:SOT-223-3_TabPin2")
     )
   )
 )

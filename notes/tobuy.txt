@@ -1,2 +1,4 @@
 - esp-prog
 - mhp30 hotplate
+- esp-c3
+- AP2114HA-3.3TRG1
