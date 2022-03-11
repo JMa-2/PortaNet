@@ -1,6 +1,3 @@
-- small i2c OLED
-- antenna for wifi
-- screw hole 
 - need to buy stencils
 
 
@@ -8,6 +5,10 @@
 - small led for power
 - 3.3V regulator
 - jtag connector
+- small i2c OLED
+- antenna for wifi
+- screw hole
+- test points
 
 
 
