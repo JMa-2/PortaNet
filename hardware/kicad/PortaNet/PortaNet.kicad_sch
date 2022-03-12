@@ -4,30 +4,46 @@
 
   (paper "A4")
 
+  (title_block
+    (title "PortaNet")
+    (date "2022-03-12")
+    (rev "1.0")
+    (company "JCM")
+  )
+
   (lib_symbols
   )
 
 
-  (sheet (at 39.37 25.4) (size 34.29 10.16) (fields_autoplaced)
+  (text "Miscellaneous Hardware" (at 36.195 53.34 0)
+    (effects (font (size 5 5)) (justify left bottom))
+    (uuid 44d112b3-1b58-4ebd-8866-79167d7a3436)
+  )
+  (text "ESP32 Micro" (at 35.56 31.75 0)
+    (effects (font (size 5 5)) (justify left bottom))
+    (uuid ea392df3-7bcd-432a-9a3e-652caf424282)
+  )
+
+  (sheet (at 35.56 22.86) (size 48.26 10.16) (fields_autoplaced)
     (stroke (width 0.1524) (type solid) (color 0 0 0 0))
     (fill (color 0 0 0 0.0000))
     (uuid 1e5d0253-acc2-4f0d-86a2-9343225c71a7)
-    (property "Sheet name" "esp32" (id 0) (at 39.37 24.6884 0)
+    (property "Sheet name" "esp32" (id 0) (at 35.56 22.1484 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
     )
-    (property "Sheet file" "esp32.kicad_sch" (id 1) (at 39.37 36.1446 0)
+    (property "Sheet file" "esp32.kicad_sch" (id 1) (at 35.56 33.6046 0)
       (effects (font (size 1.27 1.27)) (justify left top))
     )
   )
 
-  (sheet (at 39.37 47.625) (size 34.29 10.16) (fields_autoplaced)
+  (sheet (at 35.56 44.45) (size 92.71 10.795) (fields_autoplaced)
     (stroke (width 0.1524) (type solid) (color 0 0 0 0))
     (fill (color 0 0 0 0.0000))
     (uuid 5873cb1d-2980-4d04-84de-c428523b74e7)
-    (property "Sheet name" "misc1" (id 0) (at 39.37 46.9134 0)
+    (property "Sheet name" "misc1" (id 0) (at 35.56 43.7384 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
     )
-    (property "Sheet file" "misc1.kicad_sch" (id 1) (at 39.37 58.3696 0)
+    (property "Sheet file" "misc1.kicad_sch" (id 1) (at 35.56 55.8296 0)
       (effects (font (size 1.27 1.27)) (justify left top))
     )
   )
