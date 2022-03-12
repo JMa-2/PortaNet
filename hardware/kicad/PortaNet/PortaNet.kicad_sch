@@ -165,12 +165,6 @@
     (path "/5873cb1d-2980-4d04-84de-c428523b74e7/b149f1c1-716e-46a0-a680-b44dcb675ed3"
       (reference "R10") (unit 1) (value "1k") (footprint "Resistor_SMD:R_0805_2012Metric")
     )
-    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/2471dcde-810c-44b6-bbe9-509037e68b36"
-      (reference "TP1") (unit 1) (value "TestPoint") (footprint "TestPoint:TestPoint_Pad_1.0x1.0mm")
-    )
-    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/64a975d7-4364-4e37-9cff-c7997bd9cb8f"
-      (reference "TP2") (unit 1) (value "TestPoint") (footprint "TestPoint:TestPoint_Pad_1.0x1.0mm")
-    )
     (path "/5873cb1d-2980-4d04-84de-c428523b74e7/ea8404c8-85a5-4ef2-a13d-7b6197a4838f"
       (reference "TP3") (unit 1) (value "TestPoint") (footprint "TestPoint:TestPoint_Pad_1.0x1.0mm")
     )
