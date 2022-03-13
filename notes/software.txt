@@ -1,0 +1,9 @@
+- should use freertos
+- should have wifi library
+- should have oled library
+- should have thread for wifi
+- should have thread for oled
+- need to come up with uart messages to output
+- should have uart library 
+- should have thread for uart
+

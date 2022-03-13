@@ -1,4 +1,4 @@
-- need to buy stencils
+
 
 
 ----------------COMPLETED----------------
@@ -9,6 +9,7 @@
 - antenna for wifi
 - screw hole
 - test points
+- need to buy stencils
 
 
 
