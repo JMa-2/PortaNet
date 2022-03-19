@@ -7,3 +7,42 @@
 - should have uart library 
 - should have thread for uart
 - solve mutiple internet connections at one issue
+
+
+
+-----UART-------------------------------------------------
+* allow wifi network name to change
+* passcode needed to use serial terminal
+* allow wifi password to change
+* change number of allowed connections
+* enable disable OLED screen
+* get number of people connected and any info about them
+* 
+
+
+----------------------------------------------------------
+
+
+
+
+
+-----DISPLAY----------------------------------------------
+* should show current network name
+* should show current number of connected devices
+
+
+
+
+----------------------------------------------------------
+
+
+
+-----ACCESS POINT-----------------------------------------
+
+
+
+
+----------------------------------------------------------
+
+
+
