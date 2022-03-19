@@ -1,0 +1,5 @@
+#to add aliases run '. aliases'
+
+alias openocd_start='openocd -f board/esp32-wrover-kit-3.3v.cfg'
+alias openocd_flash='openocd -f board/esp32-wrover-kit-3.3v.cfg -c "program_esp build/main.bin 0x10000 verify exit"'
+alias debug='xtensa-esp32-elf-gdb -x gdbinit build/main.elf'

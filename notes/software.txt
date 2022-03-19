@@ -6,4 +6,4 @@
 - need to come up with uart messages to output
 - should have uart library 
 - should have thread for uart
-
+- solve mutiple internet connections at one issue
