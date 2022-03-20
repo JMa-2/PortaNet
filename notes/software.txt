@@ -20,6 +20,8 @@
 
 
 * flag for passcode entered correctly
+* flag for message in buffer
+* flag for message to process
 
 
 
