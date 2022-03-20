@@ -10,14 +10,18 @@
 
 
 
------UART-------------------------------------------------
+-----SERIAL TERMINAL-------------------------------------------------
 * allow wifi network name to change
 * passcode needed to use serial terminal
 * allow wifi password to change
 * change number of allowed connections
 * enable disable OLED screen
 * get number of people connected and any info about them
-* 
+
+
+* flag for passcode entered correctly
+
+
 
 
 ----------------------------------------------------------
@@ -31,6 +35,8 @@
 * should show current number of connected devices
 
 
+* flag for toggle display state
+* flag for display enabled/disabled
 
 
 ----------------------------------------------------------
@@ -38,7 +44,10 @@
 
 
 -----ACCESS POINT-----------------------------------------
-
+* flag for ssid change
+* flag for password change
+* flag for reset of network
+* flag for access point is running
 
 
 
