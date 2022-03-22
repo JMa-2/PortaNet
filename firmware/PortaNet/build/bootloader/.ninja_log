@@ -100,3 +100,5 @@
 10745	11861	1647955662965282279	/home/kali/Gits/PortaNet/firmware/PortaNet/build/bootloader/.bin_timestamp	3cdbf4b6239b6537
 11861	12277	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	cd5e99e44726f72e
 11861	12277	0	/home/kali/Gits/PortaNet/firmware/PortaNet/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	cd5e99e44726f72e
+7	161	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	cd5e99e44726f72e
+7	161	0	/home/kali/Gits/PortaNet/firmware/PortaNet/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	cd5e99e44726f72e
