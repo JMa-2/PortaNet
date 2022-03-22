@@ -1,9 +1,9 @@
-set(CMAKE_HOST_SYSTEM "Linux-5.16.0-4-amd64")
+set(CMAKE_HOST_SYSTEM "Linux-5.14.21")
 set(CMAKE_HOST_SYSTEM_NAME "Linux")
-set(CMAKE_HOST_SYSTEM_VERSION "5.16.0-4-amd64")
-set(CMAKE_HOST_SYSTEM_PROCESSOR "x86_64")
+set(CMAKE_HOST_SYSTEM_VERSION "5.14.21")
+set(CMAKE_HOST_SYSTEM_PROCESSOR "aarch64")
 
-include("/home/jmaier/esp/esp-idf/tools/cmake/toolchain-esp32.cmake")
+include("/home/kali/esp/esp-idf/tools/cmake/toolchain-esp32.cmake")
 
 set(CMAKE_SYSTEM "Generic")
 set(CMAKE_SYSTEM_NAME "Generic")

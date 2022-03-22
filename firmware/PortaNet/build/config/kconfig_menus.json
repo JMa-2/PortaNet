@@ -83,6 +83,16 @@
         "children": [],
         "depends_on": null,
         "help": null,
+        "id": "SOC_BLUEDROID_SUPPORTED",
+        "name": "SOC_BLUEDROID_SUPPORTED",
+        "range": null,
+        "title": null,
+        "type": "bool"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
         "id": "SOC_CLASSIC_BT_SUPPORTED",
         "name": "SOC_CLASSIC_BT_SUPPORTED",
         "range": null,
@@ -233,6 +243,16 @@
         "children": [],
         "depends_on": null,
         "help": null,
+        "id": "SOC_SUPPORT_COEXISTENCE",
+        "name": "SOC_SUPPORT_COEXISTENCE",
+        "range": null,
+        "title": null,
+        "type": "bool"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
         "id": "SOC_ADC_RTC_CTRL_SUPPORTED",
         "name": "SOC_ADC_RTC_CTRL_SUPPORTED",
         "range": null,
@@ -338,6 +358,16 @@
         "range": null,
         "title": null,
         "type": "int"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
+        "id": "SOC_SHARED_IDCACHE_SUPPORTED",
+        "name": "SOC_SHARED_IDCACHE_SUPPORTED",
+        "range": null,
+        "title": null,
+        "type": "bool"
     },
     {
         "children": [],
@@ -627,7 +657,7 @@
         "name": "SOC_LCD_I80_BUSES",
         "range": null,
         "title": null,
-        "type": "bool"
+        "type": "int"
     },
     {
         "children": [],
@@ -2003,6 +2033,36 @@
                         "range": null,
                         "title": "Number of the GPIO input to boot TEST partition",
                         "type": "int"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "<choice BOOTLOADER_APP_TEST_PIN_LEVEL>",
+                                "help": null,
+                                "id": "BOOTLOADER_APP_TEST_PIN_LOW",
+                                "name": "BOOTLOADER_APP_TEST_PIN_LOW",
+                                "range": null,
+                                "title": "Enter test app on GPIO low",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "<choice BOOTLOADER_APP_TEST_PIN_LEVEL>",
+                                "help": null,
+                                "id": "BOOTLOADER_APP_TEST_PIN_HIGH",
+                                "name": "BOOTLOADER_APP_TEST_PIN_HIGH",
+                                "range": null,
+                                "title": "Enter test app on GPIO high",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "BOOTLOADER_APP_TEST",
+                        "help": "Pin level for app test, can be triggered on low or high.",
+                        "id": "bootloader-config-gpio-triggers-boot-from-test-app-partition-app-test-gpio-level",
+                        "name": "BOOTLOADER_APP_TEST_PIN_LEVEL",
+                        "title": "App test GPIO level",
+                        "type": "choice"
                     }
                 ],
                 "depends_on": "!BOOTLOADER_APP_ANTI_ROLLBACK",
@@ -3295,7 +3355,7 @@
             },
             {
                 "children": [],
-                "depends_on": "!ESP32_COMPATIBLE_PRE_V3_1_BOOTLOADERS",
+                "depends_on": "!ESP32_COMPATIBLE_PRE_V3_1_BOOTLOADERS && !IDF_TARGET_LINUX",
                 "help": "Generate an MD5 checksum for the partition table for protecting the\nintegrity of the table. The generation should be turned off for legacy\nbootloaders which cannot recognize the MD5 checksum in the partition\ntable.",
                 "id": "PARTITION_TABLE_MD5",
                 "name": "PARTITION_TABLE_MD5",
@@ -4665,7 +4725,7 @@
                                         "type": "bool"
                                     }
                                 ],
-                                "depends_on": "BT_ENABLED && (BTDM_CTRL_HCI_MODE_VHCI || BT_CTRL_HCI_MODE_VHCI)",
+                                "depends_on": "BT_ENABLED",
                                 "help": "This helps to choose Bluetooth host stack",
                                 "id": "component-config-bluetooth-bluetooth-bluetooth-host",
                                 "name": "BT_HOST",
@@ -4685,7 +4745,7 @@
                         "children": [
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "This select btc task stack size",
                                 "id": "BT_BTC_TASK_STACK_SIZE",
                                 "name": "BT_BTC_TASK_STACK_SIZE",
@@ -4716,7 +4776,7 @@
                                         "type": "bool"
                                     }
                                 ],
-                                "depends_on": "BT_BLUEDROID_ENABLED && !FREERTOS_UNICORE && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && !FREERTOS_UNICORE && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "Which the cpu core to run Bluedroid. Can choose core0 and core1.\nCan not specify no-affinity.",
                                 "id": "component-config-bluetooth-bluedroid-options-the-cpu-core-which-bluedroid-run",
                                 "name": "BT_BLUEDROID_PINNED_TO_CORE_CHOICE",
@@ -4725,7 +4785,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": null,
                                 "id": "BT_BLUEDROID_PINNED_TO_CORE",
                                 "name": "BT_BLUEDROID_PINNED_TO_CORE",
@@ -4735,7 +4795,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "This select btu task stack size",
                                 "id": "BT_BTU_TASK_STACK_SIZE",
                                 "name": "BT_BTU_TASK_STACK_SIZE",
@@ -4745,7 +4805,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "Bluedroid memory debug",
                                 "id": "BT_BLUEDROID_MEM_DEBUG",
                                 "name": "BT_BLUEDROID_MEM_DEBUG",
@@ -4757,7 +4817,7 @@
                                 "children": [
                                     {
                                         "children": [],
-                                        "depends_on": "BT_CLASSIC_ENABLED && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_CLASSIC_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Advanced Audio Distrubution Profile",
                                         "id": "BT_A2DP_ENABLE",
                                         "name": "BT_A2DP_ENABLE",
@@ -4767,7 +4827,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_CLASSIC_ENABLED && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_CLASSIC_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "This enables the Serial Port Profile",
                                         "id": "BT_SPP_ENABLED",
                                         "name": "BT_SPP_ENABLED",
@@ -4800,7 +4860,7 @@
                                                         "type": "bool"
                                                     }
                                                 ],
-                                                "depends_on": "BT_HFP_ENABLE && BT_BLUEDROID_ENABLED",
+                                                "depends_on": "BT_HFP_ENABLE && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                                 "help": null,
                                                 "id": "component-config-bluetooth-bluedroid-options-classic-bluetooth-hands-free-handset-profile-hands-free-profile-role-configuration",
                                                 "name": "BT_HFP_ROLE",
@@ -4830,7 +4890,7 @@
                                                         "type": "bool"
                                                     }
                                                 ],
-                                                "depends_on": "BT_HFP_ENABLE && BT_BLUEDROID_ENABLED",
+                                                "depends_on": "BT_HFP_ENABLE && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                                 "help": "SCO data path, i.e. HCI or PCM. This option is set using API\n\"esp_bredr_sco_datapath_set\" in Bluetooth host. Default SCO data\npath can also be set in Bluetooth Controller.",
                                                 "id": "component-config-bluetooth-bluedroid-options-classic-bluetooth-hands-free-handset-profile-audio-sco-data-path",
                                                 "name": "BT_HFP_AUDIO_DATA_PATH",
@@ -4838,7 +4898,7 @@
                                                 "type": "choice"
                                             }
                                         ],
-                                        "depends_on": "BT_CLASSIC_ENABLED && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_CLASSIC_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_HFP_ENABLE",
                                         "name": "BT_HFP_ENABLE",
@@ -4847,7 +4907,7 @@
                                         "type": "bool"
                                     }
                                 ],
-                                "depends_on": "BT_BLUEDROID_ENABLED && IDF_TARGET_ESP32 && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && IDF_TARGET_ESP32 && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "For now this option needs \"SMP_ENABLE\" to be set to yes",
                                 "id": "BT_CLASSIC_ENABLED",
                                 "name": "BT_CLASSIC_ENABLED",
@@ -4857,7 +4917,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_HFP_AUDIO_DATA_PATH_HCI && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_HFP_AUDIO_DATA_PATH_HCI && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "This enables Wide Band Speech. Should disable it when SCO data path is PCM.\nOtherwise there will be no data transmited via GPIOs.",
                                 "id": "BT_HFP_WBS_ENABLE",
                                 "name": "BT_HFP_WBS_ENABLE",
@@ -4890,7 +4950,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_HID_ENABLED && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_HID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "component-config-bluetooth-bluedroid-options-classic-bt-hid-profile-role-configuration",
                                         "name": "BT_HID_ROLE",
@@ -4898,7 +4958,7 @@
                                         "type": "choice"
                                     }
                                 ],
-                                "depends_on": "BT_CLASSIC_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_CLASSIC_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "This enables the BT HID Host",
                                 "id": "BT_HID_ENABLED",
                                 "name": "BT_HID_ENABLED",
@@ -4908,7 +4968,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_CLASSIC_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_CLASSIC_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "This enables the Secure Simple Pairing. If disable this option,\nBluedroid will only support Legacy Pairing",
                                 "id": "BT_SSP_ENABLED",
                                 "name": "BT_SSP_ENABLED",
@@ -4922,7 +4982,7 @@
                                         "children": [
                                             {
                                                 "children": [],
-                                                "depends_on": "BT_GATTS_ENABLE && BT_BLUEDROID_ENABLED",
+                                                "depends_on": "BT_GATTS_ENABLE && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                                 "help": "This enables \"Peripheral Preferred Connection Parameters\" characteristic (UUID: 0x2A04) in GAP service that has\nconnection parameters like min/max connection interval, slave latency and supervision timeout multiplier",
                                                 "id": "BT_GATTS_PPCP_CHAR_GAP",
                                                 "name": "BT_GATTS_PPCP_CHAR_GAP",
@@ -4932,7 +4992,7 @@
                                             },
                                             {
                                                 "children": [],
-                                                "depends_on": "BT_GATTS_ENABLE && BT_BLUEDROID_ENABLED",
+                                                "depends_on": "BT_GATTS_ENABLE && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                                 "help": "This option can be close when the app does not require blufi function.",
                                                 "id": "BT_BLE_BLUFI_ENABLE",
                                                 "name": "BT_BLE_BLUFI_ENABLE",
@@ -4942,7 +5002,7 @@
                                             },
                                             {
                                                 "children": [],
-                                                "depends_on": "BT_GATTS_ENABLE && BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                                "depends_on": "BT_GATTS_ENABLE && BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                                 "help": "Maximum GATT Server Profiles Count",
                                                 "id": "BT_GATT_MAX_SR_PROFILES",
                                                 "name": "BT_GATT_MAX_SR_PROFILES",
@@ -4973,7 +5033,7 @@
                                                         "type": "bool"
                                                     }
                                                 ],
-                                                "depends_on": "BT_GATTS_ENABLE && BT_BLUEDROID_ENABLED",
+                                                "depends_on": "BT_GATTS_ENABLE && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                                 "help": "Service change indication mode for GATT Server.",
                                                 "id": "component-config-bluetooth-bluedroid-options-bluetooth-low-energy-include-gatt-server-module-gatts--gatts-service-change-mode",
                                                 "name": "BT_GATTS_SEND_SERVICE_CHANGE_MODE",
@@ -4982,7 +5042,7 @@
                                             },
                                             {
                                                 "children": [],
-                                                "depends_on": "BT_GATTS_ENABLE && BT_BLUEDROID_ENABLED",
+                                                "depends_on": "BT_GATTS_ENABLE && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                                 "help": null,
                                                 "id": "BT_GATTS_SEND_SERVICE_CHANGE_MODE",
                                                 "name": "BT_GATTS_SEND_SERVICE_CHANGE_MODE",
@@ -4991,7 +5051,7 @@
                                                 "type": "int"
                                             }
                                         ],
-                                        "depends_on": "BT_BLE_ENABLED && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLE_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "This option can be disabled when the app work only on gatt client mode",
                                         "id": "BT_GATTS_ENABLE",
                                         "name": "BT_GATTS_ENABLE",
@@ -5003,7 +5063,7 @@
                                         "children": [
                                             {
                                                 "children": [],
-                                                "depends_on": "BT_GATTC_ENABLE && BT_BLUEDROID_ENABLED",
+                                                "depends_on": "BT_GATTC_ENABLE && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                                 "help": "This select can save gattc cache data to nvs flash",
                                                 "id": "BT_GATTC_CACHE_NVS_FLASH",
                                                 "name": "BT_GATTC_CACHE_NVS_FLASH",
@@ -5013,7 +5073,7 @@
                                             },
                                             {
                                                 "children": [],
-                                                "depends_on": "BT_GATTC_ENABLE && BT_BLUEDROID_ENABLED",
+                                                "depends_on": "BT_GATTC_ENABLE && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                                 "help": "The number of attempts to reconnect if the connection establishment failed",
                                                 "id": "BT_GATTC_CONNECT_RETRY_COUNT",
                                                 "name": "BT_GATTC_CONNECT_RETRY_COUNT",
@@ -5022,7 +5082,7 @@
                                                 "type": "int"
                                             }
                                         ],
-                                        "depends_on": "BT_BLE_ENABLED && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLE_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "This option can be close when the app work only on gatt server mode",
                                         "id": "BT_GATTC_ENABLE",
                                         "name": "BT_GATTC_ENABLE",
@@ -5034,7 +5094,7 @@
                                         "children": [
                                             {
                                                 "children": [],
-                                                "depends_on": "BT_BLE_SMP_ENABLE && BT_BLUEDROID_ENABLED",
+                                                "depends_on": "BT_BLE_SMP_ENABLE && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                                 "help": "In order to reduce the pairing time, slave actively initiates connection parameters\nupdate during pairing.",
                                                 "id": "BT_SMP_SLAVE_CON_PARAMS_UPD_ENABLE",
                                                 "name": "BT_SMP_SLAVE_CON_PARAMS_UPD_ENABLE",
@@ -5043,7 +5103,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLE_ENABLED && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLE_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "This option can be close when the app not used the ble security connect.",
                                         "id": "BT_BLE_SMP_ENABLE",
                                         "name": "BT_BLE_SMP_ENABLE",
@@ -5052,7 +5112,7 @@
                                         "type": "bool"
                                     }
                                 ],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "This enables Bluetooth Low Energy",
                                 "id": "BT_BLE_ENABLED",
                                 "name": "BT_BLE_ENABLED",
@@ -5062,7 +5122,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "This select can save the rodata code size",
                                 "id": "BT_STACK_NO_LOG",
                                 "name": "BT_STACK_NO_LOG",
@@ -5145,7 +5205,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for HCI layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-hci-layer",
                                         "name": "BT_LOG_HCI_TRACE_LEVEL",
@@ -5154,7 +5214,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_HCI_TRACE_LEVEL",
                                         "name": "BT_LOG_HCI_TRACE_LEVEL",
@@ -5235,7 +5295,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for BTM layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-btm-layer",
                                         "name": "BT_LOG_BTM_TRACE_LEVEL",
@@ -5244,7 +5304,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_BTM_TRACE_LEVEL",
                                         "name": "BT_LOG_BTM_TRACE_LEVEL",
@@ -5325,7 +5385,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for L2CAP layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-l2cap-layer",
                                         "name": "BT_LOG_L2CAP_TRACE_LEVEL",
@@ -5334,7 +5394,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_L2CAP_TRACE_LEVEL",
                                         "name": "BT_LOG_L2CAP_TRACE_LEVEL",
@@ -5415,7 +5475,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for RFCOMM layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-rfcomm-layer",
                                         "name": "BT_LOG_RFCOMM_TRACE_LEVEL",
@@ -5424,7 +5484,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_RFCOMM_TRACE_LEVEL",
                                         "name": "BT_LOG_RFCOMM_TRACE_LEVEL",
@@ -5505,7 +5565,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for SDP layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-sdp-layer",
                                         "name": "BT_LOG_SDP_TRACE_LEVEL",
@@ -5514,7 +5574,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_SDP_TRACE_LEVEL",
                                         "name": "BT_LOG_SDP_TRACE_LEVEL",
@@ -5595,7 +5655,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for GAP layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-gap-layer",
                                         "name": "BT_LOG_GAP_TRACE_LEVEL",
@@ -5604,7 +5664,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_GAP_TRACE_LEVEL",
                                         "name": "BT_LOG_GAP_TRACE_LEVEL",
@@ -5685,7 +5745,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for BNEP layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-bnep-layer",
                                         "name": "BT_LOG_BNEP_TRACE_LEVEL",
@@ -5694,7 +5754,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_BNEP_TRACE_LEVEL",
                                         "name": "BT_LOG_BNEP_TRACE_LEVEL",
@@ -5775,7 +5835,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for PAN layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-pan-layer",
                                         "name": "BT_LOG_PAN_TRACE_LEVEL",
@@ -5784,7 +5844,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_PAN_TRACE_LEVEL",
                                         "name": "BT_LOG_PAN_TRACE_LEVEL",
@@ -5865,7 +5925,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for A2D layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-a2d-layer",
                                         "name": "BT_LOG_A2D_TRACE_LEVEL",
@@ -5874,7 +5934,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_A2D_TRACE_LEVEL",
                                         "name": "BT_LOG_A2D_TRACE_LEVEL",
@@ -5955,7 +6015,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for AVDT layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-avdt-layer",
                                         "name": "BT_LOG_AVDT_TRACE_LEVEL",
@@ -5964,7 +6024,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_AVDT_TRACE_LEVEL",
                                         "name": "BT_LOG_AVDT_TRACE_LEVEL",
@@ -6045,7 +6105,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for AVCT layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-avct-layer",
                                         "name": "BT_LOG_AVCT_TRACE_LEVEL",
@@ -6054,7 +6114,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_AVCT_TRACE_LEVEL",
                                         "name": "BT_LOG_AVCT_TRACE_LEVEL",
@@ -6135,7 +6195,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for AVRC layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-avrc-layer",
                                         "name": "BT_LOG_AVRC_TRACE_LEVEL",
@@ -6144,7 +6204,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_AVRC_TRACE_LEVEL",
                                         "name": "BT_LOG_AVRC_TRACE_LEVEL",
@@ -6225,7 +6285,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for MCA layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-mca-layer",
                                         "name": "BT_LOG_MCA_TRACE_LEVEL",
@@ -6234,7 +6294,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_MCA_TRACE_LEVEL",
                                         "name": "BT_LOG_MCA_TRACE_LEVEL",
@@ -6315,7 +6375,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for HID layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-hid-layer",
                                         "name": "BT_LOG_HID_TRACE_LEVEL",
@@ -6324,7 +6384,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_HID_TRACE_LEVEL",
                                         "name": "BT_LOG_HID_TRACE_LEVEL",
@@ -6405,7 +6465,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for APPL layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-appl-layer",
                                         "name": "BT_LOG_APPL_TRACE_LEVEL",
@@ -6414,7 +6474,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_APPL_TRACE_LEVEL",
                                         "name": "BT_LOG_APPL_TRACE_LEVEL",
@@ -6495,7 +6555,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for GATT layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-gatt-layer",
                                         "name": "BT_LOG_GATT_TRACE_LEVEL",
@@ -6504,7 +6564,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_GATT_TRACE_LEVEL",
                                         "name": "BT_LOG_GATT_TRACE_LEVEL",
@@ -6585,7 +6645,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for SMP layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-smp-layer",
                                         "name": "BT_LOG_SMP_TRACE_LEVEL",
@@ -6594,7 +6654,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_SMP_TRACE_LEVEL",
                                         "name": "BT_LOG_SMP_TRACE_LEVEL",
@@ -6675,7 +6735,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for BTIF layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-btif-layer",
                                         "name": "BT_LOG_BTIF_TRACE_LEVEL",
@@ -6684,7 +6744,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_BTIF_TRACE_LEVEL",
                                         "name": "BT_LOG_BTIF_TRACE_LEVEL",
@@ -6765,7 +6825,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for BTC layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-btc-layer",
                                         "name": "BT_LOG_BTC_TRACE_LEVEL",
@@ -6774,7 +6834,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_BTC_TRACE_LEVEL",
                                         "name": "BT_LOG_BTC_TRACE_LEVEL",
@@ -6855,7 +6915,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for OSI layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-osi-layer",
                                         "name": "BT_LOG_OSI_TRACE_LEVEL",
@@ -6864,7 +6924,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_OSI_TRACE_LEVEL",
                                         "name": "BT_LOG_OSI_TRACE_LEVEL",
@@ -6945,7 +7005,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": "Define BT trace level for BLUFI layer",
                                         "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-blufi-layer",
                                         "name": "BT_LOG_BLUFI_TRACE_LEVEL",
@@ -6954,7 +7014,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                        "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                         "help": null,
                                         "id": "BT_LOG_BLUFI_TRACE_LEVEL",
                                         "name": "BT_LOG_BLUFI_TRACE_LEVEL",
@@ -6963,14 +7023,14 @@
                                         "type": "int"
                                     }
                                 ],
-                                "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level",
                                 "title": "BT DEBUG LOG LEVEL",
                                 "type": "menu"
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "Maximum BT/BLE connection count",
                                 "id": "BT_ACL_CONNECTIONS",
                                 "name": "BT_ACL_CONNECTIONS",
@@ -6980,7 +7040,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "Enable this option if there are multiple connections",
                                 "id": "BT_MULTI_CONNECTION_ENBALE",
                                 "name": "BT_MULTI_CONNECTION_ENBALE",
@@ -6990,7 +7050,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "This select can save the internal RAM if there have the PSRAM",
                                 "id": "BT_ALLOCATION_FROM_SPIRAM_FIRST",
                                 "name": "BT_ALLOCATION_FROM_SPIRAM_FIRST",
@@ -7000,7 +7060,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "This select can make the allocation of memory will become more flexible",
                                 "id": "BT_BLE_DYNAMIC_ENV_MEMORY",
                                 "name": "BT_BLE_DYNAMIC_ENV_MEMORY",
@@ -7010,7 +7070,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "When scanning and scan duplicate is not enabled, if there are a lot of adv packets around\nor application layer handling adv packets is slow, it will cause the controller memory\nto run out. if enabled, adv packets will be lost when host queue is congested.",
                                 "id": "BT_BLE_HOST_QUEUE_CONG_CHECK",
                                 "name": "BT_BLE_HOST_QUEUE_CONG_CHECK",
@@ -7020,7 +7080,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": null,
                                 "id": "BT_SMP_ENABLE",
                                 "name": "BT_SMP_ENABLE",
@@ -7030,7 +7090,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && (BTDM_CTRL_MODE_BTDM || BTDM_CTRL_MODE_BLE_ONLY) && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && (BTDM_CTRL_MODE_BTDM || BTDM_CTRL_MODE_BLE_ONLY) && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "Originally, when doing BLE active scan, Bluedroid will not report adv to application layer\nuntil receive scan response. This option is used to disable the behavior. When enable this option,\nBluedroid will report adv data or scan response to application layer immediately.\n\n# Memory reserved at start of DRAM for Bluetooth stack",
                                 "id": "BT_BLE_ACT_SCAN_REP_ADV_SCAN",
                                 "name": "BT_BLE_ACT_SCAN_REP_ADV_SCAN",
@@ -7040,7 +7100,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "Bluetooth Connection establishment maximum time, if connection time exceeds this value, the connection\nestablishment fails, ESP_GATTC_OPEN_EVT or ESP_GATTS_OPEN_EVT is triggered.",
                                 "id": "BT_BLE_ESTAB_LINK_CONN_TOUT",
                                 "name": "BT_BLE_ESTAB_LINK_CONN_TOUT",
@@ -7050,7 +7110,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "Bluetooth Device name length shall be no larger than 248 octets, If the broadcast data cannot contain\nthe complete device name, then only the shortname will be displayed, the rest parts that can't fit in\nwill be truncated.",
                                 "id": "BT_MAX_DEVICE_NAME_LEN",
                                 "name": "BT_MAX_DEVICE_NAME_LEN",
@@ -7060,7 +7120,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "This enables controller RPA list function.\nFor ESP32, ESP32 only support network privacy mode. If this option is enabled, ESP32 will only accept\nadvertising packets from peer devices that contain private address, HW will not receive the advertising\npackets contain identity address after IRK changed. If this option is disabled, address resolution will\nbe performed in the host, so the functions that require controller to resolve address in the white list\ncannot be used. This option is disabled by default on ESP32, please enable or disable this option according\nto your own needs.\n\nFor ESP32C3 and esp32s3, devices support network privacy mode and device privacy mode, users can switch the\ntwo modes according to their own needs. So this option is enabled by default.",
                                 "id": "BT_BLE_RPA_SUPPORTED",
                                 "name": "BT_BLE_RPA_SUPPORTED",
@@ -7070,7 +7130,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && (IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32S3) && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && (IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32S3) && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "This enables BLE 5.0 features, this option only support esp32c3/esp32s3 chip",
                                 "id": "BT_BLE_50_FEATURES_SUPPORTED",
                                 "name": "BT_BLE_50_FEATURES_SUPPORTED",
@@ -7080,7 +7140,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BT_BLUEDROID_ENABLED && (IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32S3) && BT_BLUEDROID_ENABLED",
+                                "depends_on": "BT_BLUEDROID_ENABLED && (IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32S3) && BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                                 "help": "This enables BLE 4.2 features.",
                                 "id": "BT_BLE_42_FEATURES_SUPPORTED",
                                 "name": "BT_BLE_42_FEATURES_SUPPORTED",
@@ -7089,13 +7149,64 @@
                                 "type": "bool"
                             }
                         ],
-                        "depends_on": "BT_BLUEDROID_ENABLED",
+                        "depends_on": "BT_BLUEDROID_ENABLED && SOC_BLUEDROID_SUPPORTED",
                         "id": "component-config-bluetooth-bluedroid-options",
                         "title": "Bluedroid Options",
                         "type": "menu"
                     },
                     {
                         "children": [
+                            {
+                                "children": [
+                                    {
+                                        "children": [],
+                                        "depends_on": "BT_NIMBLE_CONTROLLER_ENABLED && BT_NIMBLE_ENABLED",
+                                        "help": "Enable or Disable controller sequence mode",
+                                        "id": "BT_NIMBLE_CONTROL_SEQUENCE_MODE_ENABLED",
+                                        "name": "BT_NIMBLE_CONTROL_SEQUENCE_MODE_ENABLED",
+                                        "range": null,
+                                        "title": "Enable controller in sequence mode",
+                                        "type": "bool"
+                                    }
+                                ],
+                                "depends_on": "BT_NIMBLE_ENABLED && IDF_TARGET_ESP32H2 && BT_NIMBLE_ENABLED",
+                                "help": "Enable or Disable NimBLE controller",
+                                "id": "BT_NIMBLE_CONTROLLER_ENABLED",
+                                "name": "BT_NIMBLE_CONTROLLER_ENABLED",
+                                "range": null,
+                                "title": "Enable NimBLE controller",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [
+                                    {
+                                        "children": [],
+                                        "depends_on": "<choice>",
+                                        "help": "Use RAM as HCI interface",
+                                        "id": "BT_NIMBLE_CONTROL_USE_RAM_HCI",
+                                        "name": "BT_NIMBLE_CONTROL_USE_RAM_HCI",
+                                        "range": null,
+                                        "title": "ram",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "<choice>",
+                                        "help": "Use UART as HCI interface",
+                                        "id": "BT_NIMBLE_CONTROL_USE_UART_HCI",
+                                        "name": "BT_NIMBLE_CONTROL_USE_UART_HCI",
+                                        "range": null,
+                                        "title": "uart",
+                                        "type": "bool"
+                                    }
+                                ],
+                                "depends_on": "BT_NIMBLE_ENABLED && IDF_TARGET_ESP32H2 && BT_NIMBLE_ENABLED",
+                                "help": null,
+                                "id": "component-config-bluetooth-nimble-options-select-hci-interface",
+                                "name": null,
+                                "title": "Select HCI interface",
+                                "type": "choice"
+                            },
                             {
                                 "children": [
                                     {
@@ -7218,6 +7329,76 @@
                             },
                             {
                                 "children": [],
+                                "depends_on": "BT_NIMBLE_USE_UART_HCI && BT_NIMBLE_ENABLED",
+                                "help": "Set the port number of HCI UART",
+                                "id": "BT_NIMBLE_HCI_UART_PORT",
+                                "name": "BT_NIMBLE_HCI_UART_PORT",
+                                "range": null,
+                                "title": "HCI UART port",
+                                "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_USE_UART_HCI && BT_NIMBLE_ENABLED",
+                                "help": null,
+                                "id": "BT_NIMBLE_HCI_UART_TX_PIN",
+                                "name": "BT_NIMBLE_HCI_UART_TX_PIN",
+                                "range": null,
+                                "title": "HCI uart Tx gpio",
+                                "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_USE_UART_HCI && BT_NIMBLE_ENABLED",
+                                "help": null,
+                                "id": "BT_NIMBLE_HCI_UART_RX_PIN",
+                                "name": "BT_NIMBLE_HCI_UART_RX_PIN",
+                                "range": null,
+                                "title": "HCI uart Rx gpio",
+                                "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_USE_UART_HCI && BT_NIMBLE_ENABLED",
+                                "help": "Set the size of uart task stack",
+                                "id": "BT_NIMBLE_HCI_UART_TASK_STACK_SIZE",
+                                "name": "BT_NIMBLE_HCI_UART_TASK_STACK_SIZE",
+                                "range": null,
+                                "title": "HCI uart task stack size",
+                                "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_USE_UART_HCI && BT_NIMBLE_ENABLED",
+                                "help": "HCI uart baud rate 115200 ~ 1000000",
+                                "id": "BT_NIMBLE_HCI_UART_BAUD",
+                                "name": "BT_NIMBLE_HCI_UART_BAUD",
+                                "range": null,
+                                "title": "HCI uart baudrate",
+                                "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_ENABLED",
+                                "help": "Enable this option to run QA test.",
+                                "id": "BT_NIMBLE_RUN_QA_TEST",
+                                "name": "BT_NIMBLE_RUN_QA_TEST",
+                                "range": null,
+                                "title": "Run QA test",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_ENABLED",
+                                "help": "Enable this option to run BQB test.",
+                                "id": "BT_NIMBLE_RUN_BQB_TEST",
+                                "name": "BT_NIMBLE_RUN_BQB_TEST",
+                                "range": null,
+                                "title": "Run BQB test",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
                                 "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
                                 "help": "Defines maximum number of concurrent BLE connections. For ESP32, user\nis expected to configure BTDM_CTRL_BLE_MAX_CONN from controller menu\nalong with this option. Similarly for ESP32-C3 or ESP32-S3, user is expected to\nconfigure BT_CTRL_BLE_MAX_ACT from controller menu.",
                                 "id": "BT_NIMBLE_MAX_CONNECTIONS",
@@ -7300,8 +7481,8 @@
                                 "children": [],
                                 "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
                                 "help": "This configures stack size of NimBLE host task",
-                                "id": "BT_NIMBLE_TASK_STACK_SIZE",
-                                "name": "BT_NIMBLE_TASK_STACK_SIZE",
+                                "id": "BT_NIMBLE_HOST_TASK_STACK_SIZE",
+                                "name": "BT_NIMBLE_HOST_TASK_STACK_SIZE",
                                 "range": null,
                                 "title": "NimBLE Host task stack size",
                                 "type": "int"
@@ -7309,7 +7490,7 @@
                             {
                                 "children": [],
                                 "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
-                                "help": null,
+                                "help": "Enables central role",
                                 "id": "BT_NIMBLE_ROLE_CENTRAL",
                                 "name": "BT_NIMBLE_ROLE_CENTRAL",
                                 "range": null,
@@ -7319,7 +7500,7 @@
                             {
                                 "children": [],
                                 "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
-                                "help": null,
+                                "help": "Enable peripheral role",
                                 "id": "BT_NIMBLE_ROLE_PERIPHERAL",
                                 "name": "BT_NIMBLE_ROLE_PERIPHERAL",
                                 "range": null,
@@ -7329,7 +7510,7 @@
                             {
                                 "children": [],
                                 "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
-                                "help": null,
+                                "help": "Enables broadcaster role",
                                 "id": "BT_NIMBLE_ROLE_BROADCASTER",
                                 "name": "BT_NIMBLE_ROLE_BROADCASTER",
                                 "range": null,
@@ -7339,12 +7520,32 @@
                             {
                                 "children": [],
                                 "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
-                                "help": null,
+                                "help": "Enables observer role",
                                 "id": "BT_NIMBLE_ROLE_OBSERVER",
                                 "name": "BT_NIMBLE_ROLE_OBSERVER",
                                 "range": null,
                                 "title": "Enable BLE Observer role",
                                 "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_ENABLED && IDF_TARGET_ESP32H2 && BT_NIMBLE_ENABLED",
+                                "help": "This configures stack size of NimBLE controller task",
+                                "id": "BT_NIMBLE_CONTROLLER_TASK_STACK_SIZE",
+                                "name": "BT_NIMBLE_CONTROLLER_TASK_STACK_SIZE",
+                                "range": null,
+                                "title": "NimBLE Controller task stack size",
+                                "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
+                                "help": "This configures priority of NimBLE controller task",
+                                "id": "BT_NIMBLE_CONTROLLER_TASK_PRIORITY",
+                                "name": "BT_NIMBLE_CONTROLLER_TASK_PRIORITY",
+                                "range": null,
+                                "title": "NimBLE Controller task priority",
+                                "type": "int"
                             },
                             {
                                 "children": [],
@@ -7357,24 +7558,36 @@
                                 "type": "bool"
                             },
                             {
-                                "children": [],
+                                "children": [
+                                    {
+                                        "children": [],
+                                        "depends_on": "BT_NIMBLE_SECURITY_ENABLE && BT_NIMBLE_ENABLED",
+                                        "help": "Enable security manager legacy pairing",
+                                        "id": "BT_NIMBLE_SM_LEGACY",
+                                        "name": "BT_NIMBLE_SM_LEGACY",
+                                        "range": null,
+                                        "title": "Security manager legacy pairing",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "BT_NIMBLE_SECURITY_ENABLE && BT_NIMBLE_ENABLED",
+                                        "help": "Enable security manager secure connections",
+                                        "id": "BT_NIMBLE_SM_SC",
+                                        "name": "BT_NIMBLE_SM_SC",
+                                        "range": null,
+                                        "title": "Security manager secure connections (4.2)",
+                                        "type": "bool"
+                                    }
+                                ],
                                 "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
-                                "help": "Enable security manager legacy pairing",
-                                "id": "BT_NIMBLE_SM_LEGACY",
-                                "name": "BT_NIMBLE_SM_LEGACY",
+                                "help": "Enable BLE sm feature",
+                                "id": "BT_NIMBLE_SECURITY_ENABLE",
+                                "is_menuconfig": true,
+                                "name": "BT_NIMBLE_SECURITY_ENABLE",
                                 "range": null,
-                                "title": "Security manager legacy pairing",
-                                "type": "bool"
-                            },
-                            {
-                                "children": [],
-                                "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
-                                "help": "Enable security manager secure connections",
-                                "id": "BT_NIMBLE_SM_SC",
-                                "name": "BT_NIMBLE_SM_SC",
-                                "range": null,
-                                "title": "Security manager secure connections (4.2)",
-                                "type": "bool"
+                                "title": "Enable BLE SM feature",
+                                "type": "menu"
                             },
                             {
                                 "children": [],
@@ -7384,6 +7597,16 @@
                                 "name": "BT_NIMBLE_DEBUG",
                                 "range": null,
                                 "title": "Enable extra runtime asserts and host debugging",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_SECURITY_ENABLE && BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
+                                "help": "Enable encryption connection",
+                                "id": "BT_NIMBLE_LL_CFG_FEAT_LE_ENCRYPTION",
+                                "name": "BT_NIMBLE_LL_CFG_FEAT_LE_ENCRYPTION",
+                                "range": null,
+                                "title": "Enable LE encryption",
                                 "type": "bool"
                             },
                             {
@@ -7487,14 +7710,56 @@
                                 "type": "int"
                             },
                             {
-                                "children": [],
-                                "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
-                                "help": "MSYS is a system level mbuf registry. For prepare write & prepare\nresponses MBUFs are allocated out of msys_1 pool. For NIMBLE_MESH\nenabled cases, this block count is increased by 8 than user defined\ncount.",
-                                "id": "BT_NIMBLE_MSYS1_BLOCK_COUNT",
-                                "name": "BT_NIMBLE_MSYS1_BLOCK_COUNT",
+                                "children": [
+                                    {
+                                        "children": [],
+                                        "depends_on": "BT_NIMBLE_MEMORY_SETTINGS && BT_NIMBLE_ENABLED",
+                                        "help": "MSYS is a system level mbuf registry. For prepare write & prepare\nresponses MBUFs are allocated out of msys_1 pool. For NIMBLE_MESH\nenabled cases, this block count is increased by 8 than user defined\ncount.",
+                                        "id": "BT_NIMBLE_MSYS_1_BLOCK_COUNT",
+                                        "name": "BT_NIMBLE_MSYS_1_BLOCK_COUNT",
+                                        "range": null,
+                                        "title": "MSYS_1 Block Count",
+                                        "type": "int"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "BT_NIMBLE_MEMORY_SETTINGS && BT_NIMBLE_ENABLED",
+                                        "help": "Dynamic memory size of block 1",
+                                        "id": "BT_NIMBLE_MSYS_1_BLOCK_SIZE",
+                                        "name": "BT_NIMBLE_MSYS_1_BLOCK_SIZE",
+                                        "range": null,
+                                        "title": "MSYS_1 Block Size",
+                                        "type": "int"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "BT_NIMBLE_MEMORY_SETTINGS && BT_NIMBLE_ENABLED",
+                                        "help": "Dynamic memory count",
+                                        "id": "BT_NIMBLE_MSYS_2_BLOCK_COUNT",
+                                        "name": "BT_NIMBLE_MSYS_2_BLOCK_COUNT",
+                                        "range": null,
+                                        "title": "MSYS_2 Block Count",
+                                        "type": "int"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "BT_NIMBLE_MEMORY_SETTINGS && BT_NIMBLE_ENABLED",
+                                        "help": "Dynamic memory size of block 2",
+                                        "id": "BT_NIMBLE_MSYS_2_BLOCK_SIZE",
+                                        "name": "BT_NIMBLE_MSYS_2_BLOCK_SIZE",
+                                        "range": null,
+                                        "title": "MSYS_2 Block Size",
+                                        "type": "int"
+                                    }
+                                ],
+                                "depends_on": "BT_NIMBLE_ENABLED",
+                                "help": "Settings memory blocks",
+                                "id": "BT_NIMBLE_MEMORY_SETTINGS",
+                                "is_menuconfig": true,
+                                "name": "BT_NIMBLE_MEMORY_SETTINGS",
                                 "range": null,
-                                "title": "MSYS_1 Block Count",
-                                "type": "int"
+                                "title": "OS Memory Settings",
+                                "type": "menu"
                             },
                             {
                                 "children": [
@@ -7724,53 +7989,235 @@
                             {
                                 "children": [
                                     {
-                                        "children": [],
-                                        "depends_on": "BT_NIMBLE_EXT_ADV && BT_NIMBLE_ENABLED",
-                                        "help": "Change this option to set maximum number of extended advertising\ninstances. Minimum there is always one instance of\nadvertising. Enter how many more advertising instances you\nwant.",
-                                        "id": "BT_NIMBLE_MAX_EXT_ADV_INSTANCES",
-                                        "name": "BT_NIMBLE_MAX_EXT_ADV_INSTANCES",
+                                        "children": [
+                                            {
+                                                "children": [],
+                                                "depends_on": "BT_NIMBLE_50_FEATURE_SUPPORT && BT_NIMBLE_EXT_ADV && BT_NIMBLE_ENABLED",
+                                                "help": "Ext ADV packet size",
+                                                "id": "BT_NIMBLE_EXT_ADV_MAX_SIZE",
+                                                "name": "BT_NIMBLE_EXT_ADV_MAX_SIZE",
+                                                "range": null,
+                                                "title": "set ext adv maximum paket size",
+                                                "type": "int"
+                                            }
+                                        ],
+                                        "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_50_FEATURE_SUPPORT && BT_NIMBLE_ENABLED",
+                                        "help": "Enable this option to do extended advertising. Extended advertising\nwill be supported from BLE 5.0 onwards.",
+                                        "id": "BT_NIMBLE_EXT_ADV",
+                                        "name": "BT_NIMBLE_EXT_ADV",
                                         "range": null,
-                                        "title": "Maximum number of extended advertising instances.",
-                                        "type": "int"
+                                        "title": "Enable extended advertising",
+                                        "type": "bool"
+                                    }
+                                ],
+                                "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
+                                "help": "Enable BLE v5.0 feature",
+                                "id": "BT_NIMBLE_50_FEATURE_SUPPORT",
+                                "is_menuconfig": true,
+                                "name": "BT_NIMBLE_50_FEATURE_SUPPORT",
+                                "range": null,
+                                "title": "Enable BLE v5.0 feature",
+                                "type": "menu"
+                            },
+                            {
+                                "children": [
+                                    {
+                                        "children": [],
+                                        "depends_on": "<choice BT_NIMBLE_COEX_PHY_CODED_TX_RX_TLIM>",
+                                        "help": "Always enable the limitation on max tx/rx time for Coded-PHY connection",
+                                        "id": "BT_NIMBLE_COEX_PHY_CODED_TX_RX_TLIM_EN",
+                                        "name": "BT_NIMBLE_COEX_PHY_CODED_TX_RX_TLIM_EN",
+                                        "range": null,
+                                        "title": "Force Enable",
+                                        "type": "bool"
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "BT_NIMBLE_EXT_ADV && BT_NIMBLE_ENABLED",
-                                        "help": "Defines size of extended advertising data. Size should not increase\n1650.",
-                                        "id": "BT_NIMBLE_MAX_EXT_ADV_DATA_LEN",
-                                        "name": "BT_NIMBLE_MAX_EXT_ADV_DATA_LEN",
+                                        "depends_on": "<choice BT_NIMBLE_COEX_PHY_CODED_TX_RX_TLIM>",
+                                        "help": "Disable the limitation on max tx/rx time for Coded-PHY connection",
+                                        "id": "BT_NIMBLE_COEX_PHY_CODED_TX_RX_TLIM_DIS",
+                                        "name": "BT_NIMBLE_COEX_PHY_CODED_TX_RX_TLIM_DIS",
                                         "range": null,
-                                        "title": "Maximum length of the advertising data.",
-                                        "type": "int"
-                                    },
+                                        "title": "Force Disable",
+                                        "type": "bool"
+                                    }
+                                ],
+                                "depends_on": "ESP32_WIFI_SW_COEXIST_ENABLE && BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
+                                "help": "When using PHY-Coded in BLE connection, limitation on max tx/rx time can be applied to\nbetter avoid dramatic performance deterioration of Wi-Fi.",
+                                "id": "component-config-bluetooth-nimble-options-coexistence-limit-on-max-tx-rx-time-for-coded-phy-connection",
+                                "name": "BT_NIMBLE_COEX_PHY_CODED_TX_RX_TLIM",
+                                "title": "Coexistence: limit on MAX Tx/Rx time for coded-PHY connection",
+                                "type": "choice"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_ENABLED",
+                                "help": null,
+                                "id": "BT_NIMBLE_COEX_PHY_CODED_TX_RX_TLIM_EFF",
+                                "name": "BT_NIMBLE_COEX_PHY_CODED_TX_RX_TLIM_EFF",
+                                "range": null,
+                                "title": null,
+                                "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
+                                "help": "BLE list size",
+                                "id": "BT_NIMBLE_WHITELIST_SIZE",
+                                "name": "BT_NIMBLE_WHITELIST_SIZE",
+                                "range": null,
+                                "title": "BLE white list size",
+                                "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_EXT_ADV && BT_NIMBLE_ENABLED",
+                                "help": "Change this option to set maximum number of extended advertising\ninstances. Minimum there is always one instance of\nadvertising. Enter how many more advertising instances you\nwant.",
+                                "id": "BT_NIMBLE_MAX_EXT_ADV_INSTANCES",
+                                "name": "BT_NIMBLE_MAX_EXT_ADV_INSTANCES",
+                                "range": null,
+                                "title": "Maximum number of extended advertising instances.",
+                                "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_EXT_ADV && BT_NIMBLE_ENABLED",
+                                "help": "Defines size of extended advertising data. Size should not increase\n1650.",
+                                "id": "BT_NIMBLE_MAX_EXT_ADV_DATA_LEN",
+                                "name": "BT_NIMBLE_MAX_EXT_ADV_DATA_LEN",
+                                "range": null,
+                                "title": "Maximum length of the advertising data.",
+                                "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_EXT_ADV && BT_NIMBLE_ENABLED",
+                                "help": "Enable this option to start periodic advertisement.",
+                                "id": "BT_NIMBLE_ENABLE_PERIODIC_ADV",
+                                "name": "BT_NIMBLE_ENABLE_PERIODIC_ADV",
+                                "range": null,
+                                "title": "Enable periodic advertisement.",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_EXT_ADV && BT_NIMBLE_ENABLED",
+                                "help": "This enables controller transfer periodic sync events to host",
+                                "id": "BT_NIMBLE_PERIODIC_ADV_SYNC_TRANSFER",
+                                "name": "BT_NIMBLE_PERIODIC_ADV_SYNC_TRANSFER",
+                                "range": null,
+                                "title": "Enable Transer Sync Events",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_ENABLE_PERIODIC_ADV && BT_NIMBLE_ENABLED",
+                                "help": "Set this option to set the upper limit for number of periodic sync\nconnections. This should be less than maximum connections allowed by\ncontroller.",
+                                "id": "BT_NIMBLE_MAX_PERIODIC_SYNCS",
+                                "name": "BT_NIMBLE_MAX_PERIODIC_SYNCS",
+                                "range": null,
+                                "title": "Maximum number of periodic advertising syncs.",
+                                "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_50_FEATURE_SUPPORT && BT_NIMBLE_ENABLED",
+                                "help": "Enable 2M-PHY",
+                                "id": "BT_NIMBLE_LL_CFG_FEAT_LE_2M_PHY",
+                                "name": "BT_NIMBLE_LL_CFG_FEAT_LE_2M_PHY",
+                                "range": null,
+                                "title": "Enable 2M Phy",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_50_FEATURE_SUPPORT && BT_NIMBLE_ENABLED",
+                                "help": "Enable coded-PHY",
+                                "id": "BT_NIMBLE_LL_CFG_FEAT_LE_CODED_PHY",
+                                "name": "BT_NIMBLE_LL_CFG_FEAT_LE_CODED_PHY",
+                                "range": null,
+                                "title": "Enable coded Phy",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_ENABLED",
+                                "help": "Run example on Ble Only Hardware",
+                                "id": "BT_NIMBLE_HARDWARE_BLE_ONLY",
+                                "name": "BT_NIMBLE_HARDWARE_BLE_ONLY",
+                                "range": null,
+                                "title": "Run example on Ble Only Hardware",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_ENABLED",
+                                "help": "Enable the throughput test mode",
+                                "id": "BT_NIMBLE_TEST_THROUGHPUT_TEST",
+                                "name": "BT_NIMBLE_TEST_THROUGHPUT_TEST",
+                                "range": null,
+                                "title": "Throughput Test Mode enable",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_ENABLED",
+                                "help": "Configure the size of resolving list used in link layer.",
+                                "id": "BT_NIMBLE_LL_RESOLV_LIST_SIZE",
+                                "name": "BT_NIMBLE_LL_RESOLV_LIST_SIZE",
+                                "range": null,
+                                "title": "BLE LL Resolving list size",
+                                "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BT_NIMBLE_ENABLED",
+                                "help": "config the max count of duplicate scan list",
+                                "id": "BT_NIMBLE_LL_DUP_SCAN_LIST_COUNT",
+                                "name": "BT_NIMBLE_LL_DUP_SCAN_LIST_COUNT",
+                                "range": null,
+                                "title": "BLE duplicate scan list count",
+                                "type": "int"
+                            },
+                            {
+                                "children": [
                                     {
                                         "children": [
                                             {
                                                 "children": [],
-                                                "depends_on": "BT_NIMBLE_ENABLE_PERIODIC_ADV && BT_NIMBLE_ENABLED",
-                                                "help": "Set this option to set the upper limit for number of periodic sync\nconnections. This should be less than maximum connections allowed by\ncontroller.",
-                                                "id": "BT_NIMBLE_MAX_PERIODIC_SYNCS",
-                                                "name": "BT_NIMBLE_MAX_PERIODIC_SYNCS",
+                                                "depends_on": "<choice>",
+                                                "help": "Use CPU rtc timer to wakeup CPU",
+                                                "id": "BT_NIMBLE_WAKEUP_SOURCE_CPU_RTC_TIMER",
+                                                "name": "BT_NIMBLE_WAKEUP_SOURCE_CPU_RTC_TIMER",
                                                 "range": null,
-                                                "title": "Maximum number of periodic advertising syncs.",
-                                                "type": "int"
+                                                "title": "Use CPU rtc timer to wakeup CPU",
+                                                "type": "bool"
+                                            },
+                                            {
+                                                "children": [],
+                                                "depends_on": "<choice>",
+                                                "help": "Use BLE rtc timer to wakeup CPU",
+                                                "id": "BT_NIMBLE_WAKEUP_SOURCE_BLE_RTC_TIMER",
+                                                "name": "BT_NIMBLE_WAKEUP_SOURCE_BLE_RTC_TIMER",
+                                                "range": null,
+                                                "title": "Use BLE rtc timer to wakeup CPU",
+                                                "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_NIMBLE_EXT_ADV && BT_NIMBLE_ENABLED",
-                                        "help": "Enable this option to start periodic advertisement.",
-                                        "id": "BT_NIMBLE_ENABLE_PERIODIC_ADV",
-                                        "name": "BT_NIMBLE_ENABLE_PERIODIC_ADV",
-                                        "range": null,
-                                        "title": "Enable periodic advertisement.",
-                                        "type": "bool"
+                                        "depends_on": "BT_NIMBLE_SLEEP_ENABLE && BT_NIMBLE_ENABLED",
+                                        "help": null,
+                                        "id": "component-config-bluetooth-nimble-options-enable-ble-sleep-ble-light-sleep-wakeup-source",
+                                        "name": null,
+                                        "title": "BLE light sleep wakeup source",
+                                        "type": "choice"
                                     }
                                 ],
-                                "depends_on": "BT_NIMBLE_ENABLED && BT_SOC_SUPPORT_5_0 && BT_NIMBLE_ENABLED",
-                                "help": "Enable this option to do extended advertising. Extended advertising\nwill be supported from BLE 5.0 onwards.",
-                                "id": "BT_NIMBLE_EXT_ADV",
-                                "name": "BT_NIMBLE_EXT_ADV",
+                                "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_ENABLED",
+                                "help": "Enable BLE sleep",
+                                "id": "BT_NIMBLE_SLEEP_ENABLE",
+                                "name": "BT_NIMBLE_SLEEP_ENABLE",
                                 "range": null,
-                                "title": "Enable extended advertising.",
+                                "title": "Enable BLE sleep",
                                 "type": "bool"
                             },
                             {
@@ -9423,6 +9870,34 @@
                         "depends_on": "SOC_TWAI_SUPPORTED",
                         "id": "component-config-driver-configurations-twai-configuration",
                         "title": "TWAI configuration",
+                        "type": "menu"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "SOC_TEMP_SENSOR_SUPPORTED",
+                                "help": "Wether to suppress the deprecation warnings when using legacy temperature sensor driver\n(driver/temp_sensor.h). If you want to continue using the legacy driver,\nand don't want to see related deprecation warnings, you can enable this option.",
+                                "id": "TEMP_SENSOR_SUPPRESS_DEPRECATE_WARN",
+                                "name": "TEMP_SENSOR_SUPPRESS_DEPRECATE_WARN",
+                                "range": null,
+                                "title": "Suppress legacy driver deprecated warning",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "SOC_TEMP_SENSOR_SUPPORTED",
+                                "help": "Wether to enable the debug log message for temperature sensor driver.\nNote that, this option only controls the temperature sensor driver log, won't affect other drivers.",
+                                "id": "TEMP_SENSOR_ENABLE_DEBUG_LOG",
+                                "name": "TEMP_SENSOR_ENABLE_DEBUG_LOG",
+                                "range": null,
+                                "title": "Enable debug log",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_TEMP_SENSOR_SUPPORTED",
+                        "id": "component-config-driver-configurations-temperature-sensor-configuration",
+                        "title": "Temperature sensor Configuration",
                         "type": "menu"
                     },
                     {
@@ -11705,6 +12180,26 @@
                                 "range": null,
                                 "title": "LCD panel io format buffer size",
                                 "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": null,
+                                "help": "Wether to enable the debug log message for LCD driver.\nNote that, this option only controls the LCD driver log, won't affect other drivers.",
+                                "id": "LCD_ENABLE_DEBUG_LOG",
+                                "name": "LCD_ENABLE_DEBUG_LOG",
+                                "range": null,
+                                "title": "Enable debug log",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "SOC_LCD_RGB_SUPPORTED",
+                                "help": "Ensure the LCD interrupt is IRAM-Safe by allowing the interrupt handler to be\nexecutable when the cache is disabled (e.g. SPI Flash write).\nIf you want the LCD driver to keep flushing the screen even when cache ops disabled,\nyou can enable this option. Note, this will also increase the IRAM usage.",
+                                "id": "LCD_RGB_ISR_IRAM_SAFE",
+                                "name": "LCD_RGB_ISR_IRAM_SAFE",
+                                "range": null,
+                                "title": "RGB LCD ISR IRAM-Safe",
+                                "type": "bool"
                             }
                         ],
                         "depends_on": null,
@@ -11762,16 +12257,6 @@
                         "name": "ESP_NETIF_USE_TCPIP_STACK_LIB",
                         "title": "TCP/IP Stack Library",
                         "type": "choice"
-                    },
-                    {
-                        "children": [],
-                        "depends_on": null,
-                        "help": "Backward compatible interface to tcpip_adapter is enabled by default to support\nlegacy TCP/IP stack initialisation code. Disable this option to use only esp-netif\ninterface.",
-                        "id": "ESP_NETIF_TCPIP_ADAPTER_COMPATIBLE_LAYER",
-                        "name": "ESP_NETIF_TCPIP_ADAPTER_COMPATIBLE_LAYER",
-                        "range": null,
-                        "title": "Enable backward compatible tcpip_adapter interface",
-                        "type": "bool"
                     },
                     {
                         "children": [
@@ -12100,8 +12585,8 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "<choice ESP_SYSTEM_PANIC>",
-                                "help": "Invoke gdbstub on the serial port, allowing for gdb to attach to it and to do a debug on runtime.\nThis feature will switch system to single core mode.",
+                                "depends_on": "!IDF_TARGET_ESP32C2 && <choice ESP_SYSTEM_PANIC>",
+                                "help": "Invoke gdbstub on the serial port, allowing for gdb to attach to it and to do a debug on runtime.",
                                 "id": "ESP_SYSTEM_GDBSTUB_RUNTIME",
                                 "name": "ESP_SYSTEM_GDBSTUB_RUNTIME",
                                 "range": null,
@@ -14523,6 +15008,16 @@
             },
             {
                 "children": [
+                    {
+                        "children": [],
+                        "depends_on": "IDF_TARGET_ESP32",
+                        "help": "This will cause the FreeRTOS component to compile with the SMP FreeRTOS kernel instead.\nTHIS FEATURE IS UNDER ACTIVE DEVELOPMENT, users use this at their own risk.",
+                        "id": "FREERTOS_SMP",
+                        "name": "FREERTOS_SMP",
+                        "range": null,
+                        "title": "Run the SMP FreeRTOS kernel instead (FEATURE UNDER DEVELOPMENT)",
+                        "type": "bool"
+                    },
                     {
                         "children": [],
                         "depends_on": null,
@@ -17217,7 +17712,7 @@
                                         "type": "bool"
                                     }
                                 ],
-                                "depends_on": "MBEDTLS_TLS_ENABLED",
+                                "depends_on": "MBEDTLS_TLS_ENABLED && MBEDTLS_SSL_KEEP_PEER_CERTIFICATE && !MBEDTLS_DYNAMIC_BUFFER",
                                 "help": null,
                                 "id": "MBEDTLS_SSL_PROTO_TLS1_3",
                                 "name": "MBEDTLS_SSL_PROTO_TLS1_3",
@@ -17503,6 +17998,27 @@
                         "type": "bool"
                     },
                     {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "MBEDTLS_HARDWARE_ECC",
+                                "help": "Fallback to software implementation of ECC point multiplication and point verification\nfor curves not supported in hardware.",
+                                "id": "MBEDTLS_ECC_OTHER_CURVES_SOFT_FALLBACK",
+                                "name": "MBEDTLS_ECC_OTHER_CURVES_SOFT_FALLBACK",
+                                "range": null,
+                                "title": "Fallback to software implementation for curves not supported in hardware",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "SOC_ECC_SUPPORTED",
+                        "help": "Enable hardware accelerated ECC point multiplication and point verification for points\non curve SECP192R1 and SECP256R1 in mbedTLS",
+                        "id": "MBEDTLS_HARDWARE_ECC",
+                        "name": "MBEDTLS_HARDWARE_ECC",
+                        "range": null,
+                        "title": "Enable hardware ECC acceleration",
+                        "type": "bool"
+                    },
+                    {
                         "children": [],
                         "depends_on": null,
                         "help": "Use ROM MD5 in mbedTLS.",
@@ -17534,6 +18050,16 @@
                     },
                     {
                         "children": [
+                            {
+                                "children": [],
+                                "depends_on": "MBEDTLS_HAVE_TIME",
+                                "help": "Enabling this config will provide users with a function\n\"mbedtls_platform_set_time()\" that allows to set an alternative\ntime function pointer.",
+                                "id": "MBEDTLS_PLATFORM_TIME_ALT",
+                                "name": "MBEDTLS_PLATFORM_TIME_ALT",
+                                "range": null,
+                                "title": "Enable mbedtls time support: platform-specific",
+                                "type": "bool"
+                            },
                             {
                                 "children": [],
                                 "depends_on": "MBEDTLS_HAVE_TIME",
@@ -18346,6 +18872,19 @@
                     {
                         "children": [],
                         "depends_on": null,
+                        "help": "Number of network interfaces to be served by the mDNS library.\nLowering this number helps to reduce some static RAM usage.",
+                        "id": "MDNS_MAX_INTERFACES",
+                        "name": "MDNS_MAX_INTERFACES",
+                        "range": [
+                            1,
+                            9
+                        ],
+                        "title": "Max number of interfaces",
+                        "type": "int"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
                         "help": "Services take up a certain amount of memory, and allowing fewer\nservices to be open at the same time conserves memory. Specify\nthe maximum amount of services here. The valid value is from 1\nto 64.",
                         "id": "MDNS_MAX_SERVICES",
                         "name": "MDNS_MAX_SERVICES",
@@ -18445,7 +18984,7 @@
                     {
                         "children": [],
                         "depends_on": null,
-                        "help": "Configures strict mode. Set this to 1 for the mDNS library to strictly follow the RFC6762:\nCurrently the only strict feature: Do not repeat original questions in response packets\n(defined in RFC6762 sec. 6).\nDefault configuration is 0, i.e. non-strict mode, since some implementations,\nsuch as lwIP mdns resolver (used by standard POSIX API like getaddrinfo, gethostbyname)\ncould not correctly resolve advertised names.",
+                        "help": "Configures strict mode. Set this to 1 for the mDNS library to strictly follow the RFC6762:\nCurrently the only strict feature: Do not repeat original questions in response packets\n(defined in RFC6762 sec. 6).\nDefault configuration is 0, i.e. non-strict mode, since some implementations,\nsuch as lwIP mDNS resolver (used by standard POSIX API like getaddrinfo, gethostbyname)\ncould not correctly resolve advertised names.",
                         "id": "MDNS_STRICT_MODE",
                         "name": "MDNS_STRICT_MODE",
                         "range": null,
@@ -18468,11 +19007,11 @@
                     {
                         "children": [],
                         "depends_on": null,
-                        "help": "Enables optional mdns networking implementation using BSD sockets\nin UDP multicast mode.\nThis option creates a new thread to serve receiving packets (TODO).\nThis option uses additional N sockets, where N is number of interfaces.",
+                        "help": "Enables optional mDNS networking implementation using BSD sockets\nin UDP multicast mode.\nThis option creates a new thread to serve receiving packets (TODO).\nThis option uses additional N sockets, where N is number of interfaces.",
                         "id": "MDNS_NETWORKING_SOCKET",
                         "name": "MDNS_NETWORKING_SOCKET",
                         "range": null,
-                        "title": "Use BSD sockets for mdns networking",
+                        "title": "Use BSD sockets for mDNS networking",
                         "type": "bool"
                     },
                     {
@@ -18484,6 +19023,44 @@
                         "range": null,
                         "title": "Multiple instances under the same service type",
                         "type": "bool"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": null,
+                                "help": "Set up mDNS for the default WiFi station.\nDisable this option if you do not need mDNS on default WiFi STA.",
+                                "id": "MDNS_PREDEF_NETIF_STA",
+                                "name": "MDNS_PREDEF_NETIF_STA",
+                                "range": null,
+                                "title": "Use predefined interface for WiFi Station",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": null,
+                                "help": "Set up mDNS for the default WiFi Access Point.\nDisable this option if you do not need mDNS on default WiFi AP.",
+                                "id": "MDNS_PREDEF_NETIF_AP",
+                                "name": "MDNS_PREDEF_NETIF_AP",
+                                "range": null,
+                                "title": "Use predefined interface for WiFi Access Point",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "ETH_ENABLED",
+                                "help": "Set up mDNS for the default Ethernet interface.\nDisable this option if you do not need mDNS on default Ethernet.",
+                                "id": "MDNS_PREDEF_NETIF_ETH",
+                                "name": "MDNS_PREDEF_NETIF_ETH",
+                                "range": null,
+                                "title": "Use predefined interface for Ethernet",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": null,
+                        "id": "component-config-mdns-mdns-predefined-interfaces",
+                        "title": "MDNS Predefined interfaces",
+                        "type": "menu"
                     }
                 ],
                 "depends_on": null,
@@ -18963,18 +19540,7 @@
                                 "type": "bool"
                             },
                             {
-                                "children": [
-                                    {
-                                        "children": [],
-                                        "depends_on": "OPENTHREAD_BORDER_ROUTER",
-                                        "help": "Select this option to enable sending 15.4 frames through the backbone interface.",
-                                        "id": "OPENTHREAD_TREL",
-                                        "name": "OPENTHREAD_TREL",
-                                        "range": null,
-                                        "title": "Enable Thread Radio Encapsulation Link",
-                                        "type": "bool"
-                                    }
-                                ],
+                                "children": [],
                                 "depends_on": "OPENTHREAD_ENABLED",
                                 "help": "Select this option to enable border router features in OpenThread.",
                                 "id": "OPENTHREAD_BORDER_ROUTER",

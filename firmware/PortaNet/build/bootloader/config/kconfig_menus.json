@@ -83,6 +83,16 @@
         "children": [],
         "depends_on": null,
         "help": null,
+        "id": "SOC_BLUEDROID_SUPPORTED",
+        "name": "SOC_BLUEDROID_SUPPORTED",
+        "range": null,
+        "title": null,
+        "type": "bool"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
         "id": "SOC_CLASSIC_BT_SUPPORTED",
         "name": "SOC_CLASSIC_BT_SUPPORTED",
         "range": null,
@@ -233,6 +243,16 @@
         "children": [],
         "depends_on": null,
         "help": null,
+        "id": "SOC_SUPPORT_COEXISTENCE",
+        "name": "SOC_SUPPORT_COEXISTENCE",
+        "range": null,
+        "title": null,
+        "type": "bool"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
         "id": "SOC_ADC_RTC_CTRL_SUPPORTED",
         "name": "SOC_ADC_RTC_CTRL_SUPPORTED",
         "range": null,
@@ -338,6 +358,16 @@
         "range": null,
         "title": null,
         "type": "int"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
+        "id": "SOC_SHARED_IDCACHE_SUPPORTED",
+        "name": "SOC_SHARED_IDCACHE_SUPPORTED",
+        "range": null,
+        "title": null,
+        "type": "bool"
     },
     {
         "children": [],
@@ -627,7 +657,7 @@
         "name": "SOC_LCD_I80_BUSES",
         "range": null,
         "title": null,
-        "type": "bool"
+        "type": "int"
     },
     {
         "children": [],
@@ -1931,6 +1961,36 @@
                         "range": null,
                         "title": "Number of the GPIO input to boot TEST partition",
                         "type": "int"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "<choice BOOTLOADER_APP_TEST_PIN_LEVEL>",
+                                "help": null,
+                                "id": "BOOTLOADER_APP_TEST_PIN_LOW",
+                                "name": "BOOTLOADER_APP_TEST_PIN_LOW",
+                                "range": null,
+                                "title": "Enter test app on GPIO low",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "<choice BOOTLOADER_APP_TEST_PIN_LEVEL>",
+                                "help": null,
+                                "id": "BOOTLOADER_APP_TEST_PIN_HIGH",
+                                "name": "BOOTLOADER_APP_TEST_PIN_HIGH",
+                                "range": null,
+                                "title": "Enter test app on GPIO high",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "BOOTLOADER_APP_TEST",
+                        "help": "Pin level for app test, can be triggered on low or high.",
+                        "id": "bootloader-config-gpio-triggers-boot-from-test-app-partition-app-test-gpio-level",
+                        "name": "BOOTLOADER_APP_TEST_PIN_LEVEL",
+                        "title": "App test GPIO level",
+                        "type": "choice"
                     }
                 ],
                 "depends_on": "!BOOTLOADER_APP_ANTI_ROLLBACK",
@@ -3223,7 +3283,7 @@
             },
             {
                 "children": [],
-                "depends_on": "!ESP32_COMPATIBLE_PRE_V3_1_BOOTLOADERS",
+                "depends_on": "!ESP32_COMPATIBLE_PRE_V3_1_BOOTLOADERS && !IDF_TARGET_LINUX",
                 "help": "Generate an MD5 checksum for the partition table for protecting the\nintegrity of the table. The generation should be turned off for legacy\nbootloaders which cannot recognize the MD5 checksum in the partition\ntable.",
                 "id": "PARTITION_TABLE_MD5",
                 "name": "PARTITION_TABLE_MD5",
@@ -4993,8 +5053,8 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "<choice ESP_SYSTEM_PANIC>",
-                                "help": "Invoke gdbstub on the serial port, allowing for gdb to attach to it and to do a debug on runtime.\nThis feature will switch system to single core mode.",
+                                "depends_on": "!IDF_TARGET_ESP32C2 && <choice ESP_SYSTEM_PANIC>",
+                                "help": "Invoke gdbstub on the serial port, allowing for gdb to attach to it and to do a debug on runtime.",
                                 "id": "ESP_SYSTEM_GDBSTUB_RUNTIME",
                                 "name": "ESP_SYSTEM_GDBSTUB_RUNTIME",
                                 "range": null,
@@ -5778,6 +5838,16 @@
             },
             {
                 "children": [
+                    {
+                        "children": [],
+                        "depends_on": "IDF_TARGET_ESP32",
+                        "help": "This will cause the FreeRTOS component to compile with the SMP FreeRTOS kernel instead.\nTHIS FEATURE IS UNDER ACTIVE DEVELOPMENT, users use this at their own risk.",
+                        "id": "FREERTOS_SMP",
+                        "name": "FREERTOS_SMP",
+                        "range": null,
+                        "title": "Run the SMP FreeRTOS kernel instead (FEATURE UNDER DEVELOPMENT)",
+                        "type": "bool"
+                    },
                     {
                         "children": [],
                         "depends_on": null,

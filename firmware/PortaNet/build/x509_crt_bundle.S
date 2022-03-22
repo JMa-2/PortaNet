@@ -1,4 +1,4 @@
-/* * Data converted from /home/jmaier/Gits/PortaNet/firmware/PortaNet/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from /home/kali/Gits/PortaNet/firmware/PortaNet/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 .section .rodata.embedded

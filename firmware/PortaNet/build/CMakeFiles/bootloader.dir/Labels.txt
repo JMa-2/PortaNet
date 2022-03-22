@@ -1,13 +1,13 @@
 # Target labels
  bootloader
 # Source files and their labels
-/home/jmaier/Gits/PortaNet/firmware/PortaNet/build/CMakeFiles/bootloader
-/home/jmaier/Gits/PortaNet/firmware/PortaNet/build/CMakeFiles/bootloader.rule
-/home/jmaier/Gits/PortaNet/firmware/PortaNet/build/CMakeFiles/bootloader-complete.rule
-/home/jmaier/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
-/home/jmaier/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
-/home/jmaier/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
-/home/jmaier/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
-/home/jmaier/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
-/home/jmaier/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
-/home/jmaier/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
+/home/kali/Gits/PortaNet/firmware/PortaNet/build/CMakeFiles/bootloader
+/home/kali/Gits/PortaNet/firmware/PortaNet/build/CMakeFiles/bootloader.rule
+/home/kali/Gits/PortaNet/firmware/PortaNet/build/CMakeFiles/bootloader-complete.rule
+/home/kali/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/home/kali/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/kali/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/kali/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/kali/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/kali/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/kali/Gits/PortaNet/firmware/PortaNet/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
