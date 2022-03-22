@@ -1,18 +1,27 @@
 #include "ApController.h"
 
-static void getFlashSsid(char *ssid);
-static void getFlashPassword(char *password);
+#define SSID_MEM        "ssid"
+#define PASSWORD_MEM    "password"
+#define NUMCONN_MEM     "numConnSetting"
+
+static bool getFlashSsid(char *id, size_t *len);
+static bool getFlashPassword(char *pass, size_t *len);
+static bool getFlashNumConn(uint8_t *numConn);
+static bool setFlashSsid(char *id);
+static bool setFlashPassword(char *pass);
+static bool setFlashNumConn(uint8_t numConn);
 static bool startWifi(char *id, char *pass, uint8_t numConn);
 static bool stopWifi(void);
-
-static char ssid[MAX_SSID_LENGTH] = DEFAULT_SSID;
-static char password[MAX_PASSWORD_LENGTH] = DEFAULT_PASSWORD;
-static uint8_t numConnSetting = DEFAULT_NUMCONNECTIONS;
 
 
 
 void AccessPointController(ApData data)
 {
+    static char ssid[MAX_SSID_LENGTH] = DEFAULT_SSID;
+    static char password[MAX_PASSWORD_LENGTH] = DEFAULT_PASSWORD;
+    static uint8_t numConnSetting = DEFAULT_NUMCONNECTIONS;
+
+
 
 }
 
@@ -55,7 +64,7 @@ bool IsApFlagSet(unsigned int flags)
 
 
 
-uint8_t PassMaxConnSetting(void)
+uint8_t PassMaxConnSetting(uint8_t num)
 {
     return numConnSetting;
 }
@@ -93,16 +102,44 @@ void PassPassword(char *str)
 
 
 
-static void getFlashSsid(char *ssid)
+static bool getFlashSsid(char *id, size_t *len)
 {
-
+    return strReadFlash(SSID_MEM, id, len);
 }
 
 
 
-static void getFlashPassword(char *password)
+static bool getFlashPassword(char *pass, size_t *len)
 {
+    return strReadFlash(PASSWORD_MEM, pass, len);
+}
 
+
+
+static bool getFlashNumConn(uint8_t *numConn)
+{
+    return u8ReadFlash(NUMCONN_MEM, numConn);
+}
+
+
+
+static bool setFlashSsid(char *id)
+{
+    return strWriteFlash(SSID_MEM, id);
+}
+
+
+
+static bool setFlashPassword(char *pass)
+{
+    return strWriteFlash(PASSWORD_MEM, pass);
+}
+
+
+
+static bool setFlashNumConn(uint8_t numConn)
+{
+    return u8WriteFlash(NUMCONN_MEM, numConn);
 }
 
 
