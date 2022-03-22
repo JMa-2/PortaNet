@@ -52,6 +52,10 @@
 * flag for access point is running
 
 
+esp_wifi_ap_get_sta_list() might get the connected devices
+
+
+
 
 ----------------------------------------------------------
 

@@ -1,7 +1,7 @@
 #include "ApInterface.h"
 
 
-static ApData ApDataBuffer = {'\0', '\0', 0};
+static ApData ApDataBuffer;
 
 
 void TaskAccessPoint(void *pvoid)
@@ -9,7 +9,7 @@ void TaskAccessPoint(void *pvoid)
     while(1)
     {
         AccessPointController(ApDataBuffer);
-        //TODO: determine task sleep
+        vTaskDelay(portTICK_PERIOD_MS);
     }
 }
 

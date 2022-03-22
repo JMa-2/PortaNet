@@ -1,8 +1,15 @@
 #ifndef APCONTROLLER_H
 #define APCONTROLLER_H
 
-#include "../interfaces/ApInterface.h"
+
 #include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+#include "esp_wifi.h"
+#include "../interfaces/ApInterface.h"
+#include "../drivers/flags.h"
+#include "../drivers/flash.h"
+
 
 #define MAX_SSID_LENGTH         32 //bytes
 #define MIN_SSID_LENGTH         5 //bytes
@@ -11,9 +18,9 @@
 #define MAX_NUMCONNECTIONS      10
 #define MIN_NUMCONNECTIONS      2
 
-#define DEFAULT_SSID                "DefualtSsid"
-#define DEFUALT_PASSWORD            "1234567890"
-#define DEFUALT_NUMCONNECTIONS      3
+#define DEFAULT_SSID                "DefaultSsid"
+#define DEFAULT_PASSWORD            "1234567890"
+#define DEFAULT_NUMCONNECTIONS      3
 
 #define WIFI_CHANNEL    0
 
@@ -82,7 +89,7 @@ uint8_t PassMaxConnSetting(void);
 /**
  * @brief pass the current number of connected devices to the interface
  * 
- * @return uint8_t current number of connected devices
+ * @return uint8_t current number of connected devices or a value of 11 if the a failure occured
  */
 uint8_t PassNumConnDevices(void);
 
