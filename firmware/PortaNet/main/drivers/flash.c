@@ -1,5 +1,9 @@
 #include "flash.h"
 
+#include <stdbool.h>
+#include "nvs_flash.h"
+#include "nvs.h"
+
 static bool inited = false;
 static nvs_handle_t handle;
 

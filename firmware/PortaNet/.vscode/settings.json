@@ -3,6 +3,7 @@
     "files.associations": {
         "apcontroller.h": "c",
         "apinterface.h": "c",
-        "flash.h": "c"
+        "flash.h": "c",
+        "sdkconfig.h": "c"
     }
 }

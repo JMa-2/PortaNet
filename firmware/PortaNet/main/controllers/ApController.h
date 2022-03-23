@@ -1,15 +1,8 @@
 #ifndef APCONTROLLER_H
 #define APCONTROLLER_H
 
-
 #include <stdbool.h>
 #include <stdint.h>
-#include <string.h>
-#include "esp_wifi.h"
-#include "../interfaces/ApInterface.h"
-#include "../drivers/flags.h"
-#include "../drivers/flash.h"
-
 
 #define MAX_SSID_LENGTH         32 //bytes
 #define MIN_SSID_LENGTH         5 //bytes

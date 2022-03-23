@@ -1,5 +1,15 @@
 #include "ApController.h"
 
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+#include "esp_wifi.h"
+#include "../interfaces/ApInterface.h"
+#include "../drivers/flags.h"
+#include "../drivers/flash.h"
+#include "nvs.h"        //TODO: remove once flash setup is done elsewhere
+#include "nvs_flash.h"  //TODO: remove once flash setup is done elsewhere
+
 #define SSID_MEM        "ssid"
 #define PASSWORD_MEM    "password"
 #define NUMCONN_MEM     "numConnSetting"
@@ -154,17 +164,25 @@ static bool SetFlashNumConn(uint8_t numConn)
 
 static bool StartWifi(char *id, char *pass, uint8_t numConn)
 {
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+      nvs_flash_erase();
+      ret = nvs_flash_init();
+    }
+
+    esp_netif_init();
+    esp_event_loop_create_default();
+    esp_netif_create_default_wifi_ap();
+
     wifi_init_config_t wifiInitConfig = WIFI_INIT_CONFIG_DEFAULT();
 
     esp_wifi_init(&wifiInitConfig);
 
-    esp_wifi_set_mode(WIFI_MODE_AP); 
-
     wifi_config_t ap_config = {
         .ap = {
-            .ssid = DEFAULT_SSID,
+            //.ssid = DEFAULT_SSID,
             .channel = WIFI_CHANNEL,
-            .password = DEFAULT_PASSWORD,
+            //.password = DEFAULT_PASSWORD,
             .max_connection = numConn,
             .authmode = WIFI_AUTH_WPA_WPA2_PSK,
             .pmf_cfg = {
@@ -173,8 +191,13 @@ static bool StartWifi(char *id, char *pass, uint8_t numConn)
         },
     };
 
-    //memcpy(ap_config.ap.ssid, id, MAX_SSID_LENGTH);
+    memcpy(ap_config.ap.ssid, id, sizeof(ap_config.ap.ssid));
+    memcpy(ap_config.ap.password, pass, sizeof(ap_config.ap.password));
+    printf("config:   %s\n\n", ap_config.ap.ssid);
+    printf("tobe:   %s\n\n", id);
+    //printf("PASSWORD:   %s\n\n", ap_config.ap.password);
 
+    esp_wifi_set_mode(WIFI_MODE_AP); 
     esp_wifi_set_config(WIFI_IF_AP, &ap_config);
     esp_err_t err = esp_wifi_start();
 
@@ -203,11 +226,11 @@ static void NetUpHandler(void)
         return;
     
     bool temp = true;
-    size_t ssidLen, passLen;
+    //size_t ssidLen, passLen;
 
-    temp = GetFlashSsid(&ssid[0], &ssidLen) ? temp : false;
-    temp = GetFlashPassword(&password[0], &passLen) ? temp : false;
-    temp = GetFlashNumConn(&numConnSetting) ? temp : false;
+    //temp = GetFlashSsid(&ssid[0], &ssidLen) ? temp : false;
+    //temp = GetFlashPassword(&password[0], &passLen) ? temp : false;
+    //temp = GetFlashNumConn(&numConnSetting) ? temp : false;
 
     temp = StartWifi(ssid, password, numConnSetting);
 

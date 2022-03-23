@@ -1,6 +1,6 @@
 #include "flags.h"
 
-
+#include <stdbool.h>
 
 unsigned int SetFlag(unsigned int flag, unsigned int val)
 {
