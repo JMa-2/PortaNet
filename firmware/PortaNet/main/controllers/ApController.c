@@ -7,12 +7,10 @@
 #include "../interfaces/ApInterface.h"
 #include "../drivers/flags.h"
 #include "../drivers/flash.h"
-#include "nvs.h"        //TODO: remove once flash setup is done elsewhere
-#include "nvs_flash.h"  //TODO: remove once flash setup is done elsewhere
 
 #define SSID_MEM        "ssid"
 #define PASSWORD_MEM    "password"
-#define NUMCONN_MEM     "numConnSetting"
+#define NUMCONN_MEM     "conn"
 
 static bool GetFlashSsid(char *id, size_t *len);
 static bool GetFlashPassword(char *pass, size_t *len);
@@ -226,7 +224,8 @@ static void NetUpHandler(void)
 
     temp = GetFlashSsid(ssid, &ssidLen) ? temp : false;
     temp = GetFlashPassword(password, &passLen) ? temp : false;
-    temp = GetFlashNumConn(&numConnSetting) ? temp : false;
+    GetFlashNumConn(&numConnSetting) ? temp : false;
+    printf("NUMCONN --- %i\n", numConnSetting);
 
     temp = StartWifi(ssid, password, numConnSetting) ? temp : false;
 

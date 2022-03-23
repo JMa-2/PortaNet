@@ -16,11 +16,12 @@ void TaskAccessPoint(void *pvoid)
         AccessPointController(ApDataBuffer);
         vTaskDelay(portTICK_PERIOD_MS);
         testOnceDelay++;
+        printf("delay: %i\n", testOnceDelay);
         if ((!testOnce) && (testOnceDelay >= 100))
         {
             printf("testing new password...\n");
-            char newPass[MAX_PASSWORD_LENGTH] = "1122334455";
-            testOnce = ReqNewPassword(newPass, strlen(newPass));
+            uint8_t newSetting = 6;
+            testOnce = ReqNewMaxConn(newSetting);
         }
     }
 }
@@ -46,7 +47,7 @@ bool ReqNewSsid(char *ssid, int ssidLen)
 
 
 
-bool ReqNewPassword(char *password, int passwordLen)
+bool ReqNewPassword(char *bufferPass, int passwordLen)
 {
     //check string length
     if ((passwordLen > MAX_PASSWORD_LENGTH) || (passwordLen < MIN_PASSWORD_LENGTH))
@@ -57,8 +58,8 @@ bool ReqNewPassword(char *password, int passwordLen)
         return false;
 
     //accept and add new password to buffer
-    strcpy(ApDataBuffer.password, password);
-    SetApFlag(AP_FLAG_PW_CHANGE);
+    strcpy(ApDataBuffer.password, bufferPass);
+    (void)SetApFlag(AP_FLAG_PW_CHANGE);
 
     return true;
 }

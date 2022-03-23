@@ -30,7 +30,7 @@ bool ReqNewSsid(char *ssid, int ssidLen);
  * @return true if the password can be used
  * @return false if the password can't be used
  */
-bool ReqNewPassword(char *password, int passwordLen);
+bool ReqNewPassword(char *bufferPass, int passwordLen);
 
 
 /**
