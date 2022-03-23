@@ -51,7 +51,7 @@ static bool CheckInit(void)
 
 
 
-bool u8ReadFlash (const char *section, uint8_t *buffer)
+bool u8ReadFlash(const char *section, uint8_t *buffer)
 {
     if (!CheckInit())
         return false;

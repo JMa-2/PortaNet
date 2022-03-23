@@ -6,8 +6,6 @@
 #include "freertos/task.h"
 
 static ApData ApDataBuffer;
-static bool testOnce = false;
-static int testOnceDelay = 0;
 
 void TaskAccessPoint(void *pvoid)
 {
@@ -17,12 +15,6 @@ void TaskAccessPoint(void *pvoid)
         vTaskDelay(portTICK_PERIOD_MS);
         testOnceDelay++;
         printf("delay: %i\n", testOnceDelay);
-        if ((!testOnce) && (testOnceDelay >= 100))
-        {
-            printf("testing new password...\n");
-            uint8_t newSetting = 6;
-            testOnce = ReqNewMaxConn(newSetting);
-        }
     }
 }
 
@@ -108,7 +100,7 @@ bool ReqNewMaxConn(int maxConn)
     if ((maxConn > MAX_NUMCONNECTIONS) || (maxConn < MIN_NUMCONNECTIONS))
         return false;
 
-    if (IsApFlagSet(AP_FLAG_NET_UP))
+    if (IsApFlagSet(AP_FLAG_NEW_MAXCONN))
         return false;
 
     ApDataBuffer.maxConn = maxConn;
