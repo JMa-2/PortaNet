@@ -1,8 +1,13 @@
 #include "ApInterface.h"
 
+#include "../controllers/ApController.h"
+#include <string.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 static ApData ApDataBuffer;
-
+static bool testOnce = false;
+static int testOnceDelay = 0;
 
 void TaskAccessPoint(void *pvoid)
 {
@@ -10,6 +15,13 @@ void TaskAccessPoint(void *pvoid)
     {
         AccessPointController(ApDataBuffer);
         vTaskDelay(portTICK_PERIOD_MS);
+        testOnceDelay++;
+        if ((!testOnce) && (testOnceDelay >= 100))
+        {
+            printf("testing new password...\n");
+            char newPass[MAX_PASSWORD_LENGTH] = "1122334455";
+            testOnce = ReqNewPassword(newPass, strlen(newPass));
+        }
     }
 }
 
