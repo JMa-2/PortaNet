@@ -13,8 +13,6 @@ void TaskAccessPoint(void *pvoid)
     {
         AccessPointController(ApDataBuffer);
         vTaskDelay(portTICK_PERIOD_MS);
-        testOnceDelay++;
-        printf("delay: %i\n", testOnceDelay);
     }
 }
 
