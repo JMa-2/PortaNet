@@ -24,16 +24,17 @@
 
 #define WIFI_CHANNEL    0
 
-enum flags {
+enum ApFlags {
     AP_FLAG_NET_UP      = 0b1 << 0,
     AP_FLAG_NEW_SSID    = 0b1 << 1,
     AP_FLAG_PW_CHANGE   = 0b1 << 2,
     AP_FLAG_RST_NET     = 0b1 << 3,
     AP_FLAG_NEW_MAXCONN = 0b1 << 4
-}AP_FLAGS;
+};
+//}AP_FLAGS;
 
 
-typedef struct {
+typedef struct ApData{
     char ssid[MAX_SSID_LENGTH];
     char password[MAX_PASSWORD_LENGTH];
     uint8_t maxConn;

@@ -7,7 +7,7 @@
 
 void app_main(void)
 {
-	xTaskCreate(&TaskAccessPoint, "TaskAccessPoint", 2048, NULL, 1, NULL);
+	xTaskCreate(&TaskAccessPoint, "TaskAccessPoint", 4096, NULL, 1, NULL);
   
   //TODO: add serial terminal task
 

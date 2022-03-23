@@ -20,7 +20,7 @@ unsigned int ResetFlag(unsigned int flag, unsigned int val)
 
 bool IsFlagSet(unsigned int flag, unsigned int val)
 {
-    if ((flag | val) == val)
+    if ((flag & val) == val)
         return true;
     
     return false;

@@ -9,7 +9,7 @@ void TaskAccessPoint(void *pvoid)
     while(1)
     {
         AccessPointController(ApDataBuffer);
-        vTaskDelay(portTICK_PERIOD_MS);
+        //vTaskDelay(portTICK_PERIOD_MS);
     }
 }
 

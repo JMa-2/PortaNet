@@ -1,6 +1,8 @@
 {
     "idf.adapterTargetName": "esp32",
     "files.associations": {
-        "apcontroller.h": "c"
+        "apcontroller.h": "c",
+        "apinterface.h": "c",
+        "flash.h": "c"
     }
 }
