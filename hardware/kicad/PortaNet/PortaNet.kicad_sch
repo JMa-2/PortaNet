@@ -55,6 +55,9 @@
   )
 
   (symbol_instances
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/845b399e-676e-463f-8468-615daa2923c9"
+      (reference "#PWR0101") (unit 1) (value "GND") (footprint "")
+    )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/65235f14-32b1-40c3-9f6b-21412c001e81"
       (reference "#PWR0102") (unit 1) (value "GND") (footprint "")
     )
@@ -91,9 +94,6 @@
     (path "/5873cb1d-2980-4d04-84de-c428523b74e7/4a1eaff9-9653-49c7-abba-0c9b28c3c19d"
       (reference "#PWR0115") (unit 1) (value "GND") (footprint "")
     )
-    (path "/5873cb1d-2980-4d04-84de-c428523b74e7/8b11387b-e3c9-4898-899b-86c68af49618"
-      (reference "#PWR0116") (unit 1) (value "GND") (footprint "")
-    )
     (path "/5873cb1d-2980-4d04-84de-c428523b74e7/3a6abd82-44db-44a9-ab34-08030a7bb879"
       (reference "#PWR0117") (unit 1) (value "GND") (footprint "")
     )
@@ -105,6 +105,9 @@
     )
     (path "/5873cb1d-2980-4d04-84de-c428523b74e7/b1639c24-3e58-46f7-a73f-a7b02abbca1c"
       (reference "AE1") (unit 1) (value "ANT3216LL00R2400A") (footprint "JoesFootprints:ANT3216LL00R2400A")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/f90a1d80-1451-4180-a0ed-7ae5ea9453e0"
+      (reference "C1") (unit 1) (value "1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/3295f611-6ce3-4ca8-b291-32848720480c"
       (reference "C3") (unit 1) (value "0.1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
@@ -133,14 +136,11 @@
     (path "/5873cb1d-2980-4d04-84de-c428523b74e7/4785f690-743a-41cc-b50e-00fd817fdf9c"
       (reference "D3") (unit 1) (value "L196L-QYC-TR") (footprint "LED_SMD:LED_0603_1608Metric")
     )
-    (path "/5873cb1d-2980-4d04-84de-c428523b74e7/d7d48582-ff45-4e4e-93b2-a2e68697dd96"
-      (reference "D4") (unit 1) (value "DSS13UTR") (footprint "Diode_SMD:D_SOD-123F")
-    )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/572c9e75-2154-43e6-b982-b5f4a3656d77"
       (reference "H1") (unit 1) (value "MountingHole") (footprint "MountingHole:MountingHole_2.5mm")
     )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/40b76a57-467b-488d-b5d3-70cefa906a68"
-      (reference "J1") (unit 1) (value "UART") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical")
+      (reference "J1") (unit 1) (value "UART") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical")
     )
     (path "/5873cb1d-2980-4d04-84de-c428523b74e7/7f2b987d-c54d-48dc-baee-31991a9bc8e8"
       (reference "J2") (unit 1) (value "Molex 0480370001") (footprint "JoesFootprints:Molex_0480370001")
@@ -148,17 +148,8 @@
     (path "/5873cb1d-2980-4d04-84de-c428523b74e7/98a98670-8558-4d2a-ba72-d6e17971baf7"
       (reference "J3") (unit 1) (value "OLED_PINS") (footprint "JoesFootprints:OLED_0.91in_i2c")
     )
-    (path "/5873cb1d-2980-4d04-84de-c428523b74e7/b90365e8-e6c4-4034-91e7-f57d3c4f9b0a"
-      (reference "J4") (unit 1) (value "GRPB052VWVN-RC") (footprint "Connector_PinHeader_1.27mm:PinHeader_2x05_P1.27mm_Vertical")
-    )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/9a1c7ab1-dc06-4fa0-8127-248c75dab7d9"
       (reference "R1") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0805_2012Metric")
-    )
-    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/24b5c9f7-542e-4a5e-b548-b99bbce6bbc7"
-      (reference "R2") (unit 1) (value "0") (footprint "Resistor_SMD:R_0805_2012Metric")
-    )
-    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/30afac68-8f11-4dd7-80da-698047c689a0"
-      (reference "R3") (unit 1) (value "0") (footprint "Resistor_SMD:R_0805_2012Metric")
     )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/64b573f4-09b1-4cdf-a7b4-736ddbe8f850"
       (reference "R4") (unit 1) (value "0") (footprint "Resistor_SMD:R_0805_2012Metric")
