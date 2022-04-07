@@ -55,6 +55,12 @@
   )
 
   (symbol_instances
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/b39d50f3-b330-4c35-beda-06d03d6811eb"
+      (reference "#PWR01") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/d81d1402-c429-4283-bfcd-5c29562dcb4e"
+      (reference "#PWR02") (unit 1) (value "GND") (footprint "")
+    )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/845b399e-676e-463f-8468-615daa2923c9"
       (reference "#PWR0101") (unit 1) (value "GND") (footprint "")
     )
@@ -109,6 +115,9 @@
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/f90a1d80-1451-4180-a0ed-7ae5ea9453e0"
       (reference "C1") (unit 1) (value "1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/5e165934-7807-43ed-940e-6cc69877a643"
+      (reference "C2") (unit 1) (value "0.1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/3295f611-6ce3-4ca8-b291-32848720480c"
       (reference "C3") (unit 1) (value "0.1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
@@ -148,8 +157,17 @@
     (path "/5873cb1d-2980-4d04-84de-c428523b74e7/98a98670-8558-4d2a-ba72-d6e17971baf7"
       (reference "J3") (unit 1) (value "OLED_PINS") (footprint "JoesFootprints:OLED_0.91in_i2c")
     )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/fdae2716-24d7-4b8d-b7f7-a6b29d466701"
+      (reference "J4") (unit 1) (value "RST") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
+    )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/9a1c7ab1-dc06-4fa0-8127-248c75dab7d9"
       (reference "R1") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0805_2012Metric")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/d3ef9661-462e-4404-b8eb-b4fe7b10c753"
+      (reference "R2") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0805_2012Metric")
+    )
+    (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/9d58c11c-6c2e-411b-a3c2-93955e44544b"
+      (reference "R3") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0805_2012Metric")
     )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/64b573f4-09b1-4cdf-a7b4-736ddbe8f850"
       (reference "R4") (unit 1) (value "0") (footprint "Resistor_SMD:R_0805_2012Metric")
