@@ -6,6 +6,7 @@
         "flash.h": "c",
         "sdkconfig.h": "c",
         "task.h": "c",
-        "freertos.h": "c"
+        "freertos.h": "c",
+        "console.h": "c"
     }
 }

@@ -24,7 +24,6 @@ enum ApFlags {
     AP_FLAG_RST_NET     = 0b1 << 3,
     AP_FLAG_NEW_MAXCONN = 0b1 << 4
 };
-//}AP_FLAGS;
 
 
 typedef struct ApData{

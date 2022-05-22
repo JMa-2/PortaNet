@@ -3,6 +3,9 @@
 
 #include <stdbool.h>
 
+#define SSID_LENGTH         32 //bytes
+#define PASSWORD_LENGTH     64 //bytes
+
 /**
  * @brief freertos task for the wifi soft access point
  * 

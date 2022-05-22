@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "esp_wifi.h"
-#include "../interfaces/ApInterface.h"
+//#include "../interfaces/ApInterface.h"
 #include "../drivers/flags.h"
 #include "../drivers/flash.h"
 
