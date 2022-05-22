@@ -8,9 +8,6 @@
 void app_main(void)
 {
 	xTaskCreate(&TaskAccessPoint, "TaskAccessPoint", 4096, NULL, 1, NULL);
-  
-  //TODO: add serial terminal task
 
-  //TODO: add OLED display task
 
 }

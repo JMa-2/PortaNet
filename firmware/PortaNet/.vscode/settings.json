@@ -4,6 +4,8 @@
         "apcontroller.h": "c",
         "apinterface.h": "c",
         "flash.h": "c",
-        "sdkconfig.h": "c"
+        "sdkconfig.h": "c",
+        "task.h": "c",
+        "freertos.h": "c"
     }
 }
