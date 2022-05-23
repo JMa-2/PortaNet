@@ -26,25 +26,8 @@ void InitConsole(void)
     replConfig.prompt = PROMPT_STR ">";
     replConfig.max_cmdline_length = CONFIG_CONSOLE_MAX_COMMAND_LINE_LENGTH;
     
-    // esp_console_register_help_command();
-
     esp_console_dev_usb_serial_jtag_config_t hwConfig = ESP_CONSOLE_DEV_USB_SERIAL_JTAG_CONFIG_DEFAULT();
     esp_console_new_repl_usb_serial_jtag(&hwConfig, &replConfig, &repl);
 
     esp_console_start_repl(repl);
-    //esp_console_register_help_command();
-}
-
-
-
-void ProcessConsole(void)
-{
-
-}
-
-
-
-void AddConsoleCommand(esp_console_cmd_t desc)
-{
-
 }

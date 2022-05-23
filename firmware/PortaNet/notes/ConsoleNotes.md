@@ -122,15 +122,6 @@
 - initialises the console, should only need to be called once
 <br><br/>
 
-`ProcessConsole`
-
-- continuous console function to process console changes
-<br><br/>
-
-`AddConsoleCommand`
-
-- add/register console command
-<br><br/>
 
 ***
 

@@ -6,8 +6,8 @@
 
 void app_main(void)
 {
-	xTaskCreate(&TaskAccessPoint, "TaskAccessPoint", 4096, NULL, 1, NULL);
+	xTaskCreate(&TaskAccessPoint, "TaskAccessPoint", 4096, NULL, 2, NULL);
 
-	xTaskCreate(&TaskConsole, "TaskConsole", 1024, NULL, 2, NULL);
+	xTaskCreate(&TaskConsole, "TaskConsole", 4096, NULL, 1, NULL);
 	
 }
