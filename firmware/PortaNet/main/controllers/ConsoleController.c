@@ -15,6 +15,7 @@
 #include "argtable3/argtable3.h"
 #include "esp_console.h"
 #include "../interfaces/ApInterface.h"
+#include <string.h>
  
 
 static void RegisterAllCommands(void);
@@ -122,7 +123,7 @@ static void RegisterReset(void)
         .hint = NULL,
         .func = &CmdReset,
         .argtable = NULL
-    }
+    };
 
     esp_console_cmd_register(&reset_cmd);
 }
@@ -151,7 +152,7 @@ static void RegisterRestart(void)
         .hint = NULL,
         .func = &CmdRestart,
         .argtable = NULL
-    }
+    };
 
     esp_console_cmd_register(&restart_cmd);
 }
@@ -175,7 +176,7 @@ static void RegisterOn(void)
         .hint = NULL,
         .func = &CmdOn,
         .argtable = NULL
-    }
+    };
 
     esp_console_cmd_register(&on_cmd);
 }
@@ -199,7 +200,7 @@ static void RegisterOff(void)
         .hint = NULL,
         .func = &CmdOff,
         .argtable = NULL
-    }
+    };
 
     esp_console_cmd_register(&off_cmd);
 }
@@ -223,15 +224,34 @@ static void RegisterDevices(void)
         .hint = NULL,
         .func = &CmdDevices,
         .argtable = NULL
-    }
+    };
 
     esp_console_cmd_register(&devices_cmd);
 }
 
 
+static struct 
+{
+    struct arg_str *ssid;
+    struct arg_end *end;
+} ssid_args;
 
 static int CmdSsid(int argc, char **argv)
 {
+    int nerrors = arg_parse(argc, argv, (void **)&ssid_args);
+    if (nerrors != 0)
+    {
+        arg_print_errors(stderr, ssid_args.end, argv[0]);
+        return 1;
+    }
+
+    if (ReqNewSsid((char *)ssid_args.ssid->sval[0], strlen(ssid_args.ssid->sval[0])))
+        printf("\nSuccessfully requested new SSID of %s\n\n", ssid_args.ssid->sval[0]);
+
+    else
+        printf("\nFailed to request new SSID of %s\n\n", ssid_args.ssid->sval[0]);
+
+    
     return 0;
 }
 
@@ -239,7 +259,19 @@ static int CmdSsid(int argc, char **argv)
 
 static void RegisterSsid(void)
 {
+    ssid_args.ssid = arg_str0(NULL, NULL, "<ssid>", "SSID of AP");
+    ssid_args.end = arg_end(2);
 
+    const esp_console_cmd_t ssid_cmd = 
+    {
+        .command = "ssid",
+        .help = "Request new SSID of AP and restart the AP.",
+        .hint = NULL,
+        .func = &CmdSsid,
+        .argtable = &ssid_args
+    };
+
+    esp_console_cmd_register(&ssid_cmd);
 }
 
 
