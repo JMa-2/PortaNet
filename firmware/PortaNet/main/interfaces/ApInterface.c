@@ -116,3 +116,32 @@ bool ReqNewMaxConn(int maxConn)
 
 
 
+bool ReqApOff(void)
+{
+    if (!IsApFlagSet(AP_FLAG_NET_UP))
+        return false;
+
+    if (IsApFlagSet(AP_FLAG_REQ_OFF))
+        return false;
+
+    SetApFlag(AP_FLAG_REQ_OFF);
+
+    return IsApFlagSet(AP_FLAG_REQ_OFF);
+}
+
+
+
+bool ReqApOn(void)
+{
+    if(IsApFlagSet(AP_FLAG_NET_UP))
+        return false;
+
+    if(IsApFlagSet(AP_FLAG_REQ_ON))
+        return false;
+
+    SetApFlag(AP_FLAG_REQ_ON);
+
+    return IsApFlagSet(AP_FLAG_REQ_ON);
+}
+
+

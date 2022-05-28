@@ -87,6 +87,25 @@ void GetPassword(char *password);
 bool ReqNewMaxConn(int maxConn);
 
 
+/**
+ * @brief request the access point be turned off
+ * 
+ * @return true if request allowed
+ * @return false if request not allowed
+ */
+bool ReqApOff(void);
+
+
+/**
+ * @brief request the access point be turned on
+ * 
+ * @return true if request allowed
+ * @return false if request not allowed
+ */
+bool ReqApOn(void);
+
+
+
 
 
 

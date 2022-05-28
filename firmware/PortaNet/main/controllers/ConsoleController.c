@@ -63,6 +63,7 @@ static void RegisterAllCommands(void)
     RegisterSsid();
     RegisterPassword();
     RegisterMaxConn();
+    RegisterRestart();
 }
 
 
@@ -119,7 +120,7 @@ static void RegisterReset(void)
     const esp_console_cmd_t reset_cmd =
     {
         .command = "reset",
-        .help = "Reset the AP to its defual credentials.",
+        .help = "Reset the AP to its default credentials.",
         .hint = NULL,
         .func = &CmdReset,
         .argtable = NULL
@@ -133,10 +134,10 @@ static void RegisterReset(void)
 static int CmdRestart(int argc, char **argv)
 {
     if (ReqApRestart())
-        printf("\nRestart request accepted...\n");
+        printf("\nRestart request accepted...\n\n");
 
     else
-        printf("\n Restart request denied...\n");
+        printf("\n Restart request denied...\n\n");
     
     return 0;
 }
@@ -161,7 +162,12 @@ static void RegisterRestart(void)
 
 static int CmdOn(int argc, char **argv)
 {
-    //TODO add AP interface/controller functionality to handle this
+    if(ReqApOn())
+        printf("\nOn request accepted...\n\n");
+
+    else
+        printf("\nOn request denied...\n\n");
+
     return 0;
 }
 
@@ -185,7 +191,11 @@ static void RegisterOn(void)
 
 static int CmdOff(int argc, char **argv)
 {
-    //TODO add AP interface/controller functionality to handle this
+    if(ReqApOff())
+        printf("\nOff request accepted...\n\n");
+    else
+        printf("\nOff request denied...\n\n");
+
     return 0;
 }
 
@@ -322,9 +332,28 @@ static void RegisterPassword(void)
 
 
 
+static struct 
+{
+    struct arg_int *conn;
+    struct arg_end *end;
+} maxconn_args;
+
 static int CmdMaxConn(int argc, char **argv)
 {
-    //TODO need to add
+    int nerrors = arg_parse(argc, argv, (void **)&maxconn_args);
+    if (nerrors != 0)
+    {
+        arg_print_errors(stderr, maxconn_args.end, argv[0]);
+        return 1;
+    }
+
+    if (ReqNewMaxConn(maxconn_args.conn->ival[0]))
+        printf("\nSuccessfully requested new max connection quantity of %i\n\n", maxconn_args.conn->ival[0]);
+
+    else
+        printf("\nFailed to request new max connection quantity of %i\n\n", maxconn_args.conn->ival[0]);
+
+    
     return 0;
 }
 
@@ -332,7 +361,19 @@ static int CmdMaxConn(int argc, char **argv)
 
 static void RegisterMaxConn(void)
 {
+    maxconn_args.conn = arg_int0(NULL, NULL, "<numconn>", "Number of max connections.");
+    maxconn_args.end = arg_end(2);
 
+    const esp_console_cmd_t maxconn_cmd = 
+    {
+        .command = "maxconn",
+        .help = "Request new number of max connections for AP and restart the AP.",
+        .hint = NULL,
+        .func = &CmdMaxConn,
+        .argtable = &maxconn_args
+    };
+
+    esp_console_cmd_register(&maxconn_cmd);
 }
 
 

@@ -22,7 +22,9 @@ enum ApFlags {
     AP_FLAG_NEW_SSID    = 0b1 << 1,
     AP_FLAG_PW_CHANGE   = 0b1 << 2,
     AP_FLAG_RST_NET     = 0b1 << 3,
-    AP_FLAG_NEW_MAXCONN = 0b1 << 4
+    AP_FLAG_NEW_MAXCONN = 0b1 << 4,
+    AP_FLAG_REQ_OFF     = 0b1 << 5,
+    AP_FLAG_REQ_ON      = 0b1 << 6 
 };
 
 
