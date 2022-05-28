@@ -79,6 +79,13 @@ unsigned int GetNumConnections(void)
 
 
 
+unsigned int GetMaxConnections(void)
+{
+    return PassMaxConnSetting();
+}
+
+
+
 void GetSsid(char *ssid)
 {
     PassSsid(ssid);

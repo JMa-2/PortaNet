@@ -73,7 +73,7 @@ static int CmdStatus(int argc, char **argv)
     char ssid[SSID_LENGTH];
     char password[PASSWORD_LENGTH];
 
-    NumConn = GetNumConnections();
+    NumConn = GetMaxConnections();
     GetSsid(ssid);
     GetPassword(password);
 
@@ -245,7 +245,7 @@ static int CmdSsid(int argc, char **argv)
         return 1;
     }
 
-    if (ReqNewSsid((char *)ssid_args.ssid->sval[0], strlen(ssid_args.ssid->sval[0])))
+    if (ReqNewSsid((char *)ssid_args.ssid->sval[0], strlen((char *)ssid_args.ssid->sval[0])))
         printf("\nSuccessfully requested new SSID of %s\n\n", ssid_args.ssid->sval[0]);
 
     else
@@ -276,8 +276,28 @@ static void RegisterSsid(void)
 
 
 
+static struct 
+{
+    struct arg_str *pw;
+    struct arg_end *end;
+} pw_args;
+
 static int CmdPassword(int argc, char **argv)
 {
+    int nerrors = arg_parse(argc, argv, (void **)&pw_args);
+    if (nerrors != 0)
+    {
+        arg_print_errors(stderr, pw_args.end, argv[0]);
+        return 1;
+    }
+
+    if (ReqNewPassword((char *)pw_args.pw->sval[0], strlen((char *)pw_args.pw->sval[0])))
+        printf("\nSuccessfully requested new password of %s\n\n", pw_args.pw->sval[0]);
+
+    else
+        printf("\nFailed to request new password of %s\n\n", pw_args.pw->sval[0]);
+
+    
     return 0;
 }
 
@@ -285,13 +305,26 @@ static int CmdPassword(int argc, char **argv)
 
 static void RegisterPassword(void)
 {
+    pw_args.pw = arg_str0(NULL, NULL, "<pw>", "Password of AP");
+    pw_args.end = arg_end(2);
 
+    const esp_console_cmd_t pw_cmd = 
+    {
+        .command = "password",
+        .help = "Request new password of AP and restart the AP.",
+        .hint = NULL,
+        .func = &CmdPassword,
+        .argtable = &pw_args
+    };
+
+    esp_console_cmd_register(&pw_cmd);
 }
 
 
 
 static int CmdMaxConn(int argc, char **argv)
 {
+    //TODO need to add
     return 0;
 }
 

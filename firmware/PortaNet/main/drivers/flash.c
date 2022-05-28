@@ -91,6 +91,7 @@ bool strReadFlash(const char *section, char *buffer, size_t *len)
     if (!CheckInit())
         return false;
 
+    nvs_get_str(handle, section, NULL, len);
     esp_err_t err = nvs_get_str(handle, section, buffer, len);
 
     if (err == ESP_OK)

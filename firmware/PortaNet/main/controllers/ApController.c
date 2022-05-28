@@ -129,7 +129,7 @@ static bool GetFlashSsid(char *id, size_t *len)
     if (temp)
         return true;
     
-    return SetFlashSsid(id);
+    return SetFlashSsid(ssid);
 }
 
 
@@ -143,7 +143,7 @@ static bool GetFlashPassword(char *pass, size_t *len)
     if (temp)
         return true;
 
-    return SetFlashPassword(pass);
+    return SetFlashPassword(password);
 }
 
 
@@ -157,7 +157,7 @@ static bool GetFlashNumConn(uint8_t *numConn)
     if (temp)
         return true;
     
-    return SetFlashNumConn(*numConn);
+    return SetFlashNumConn(numConnSetting);
 }
 
 
@@ -207,12 +207,6 @@ static bool StartWifi(char *id, char *pass, uint8_t numConn)
 
     memcpy(ap_config.ap.ssid, id, sizeof(ap_config.ap.ssid));
     memcpy(ap_config.ap.password, pass, sizeof(ap_config.ap.password));
-    
-    printf("\n");
-    printf("SSID --- %s\n", ap_config.ap.ssid);
-    printf("PASSWORD --- %s\n", ap_config.ap.password);
-    printf("NUMCONN --- %i\n", numConn);
-    printf("\n");
 
     esp_wifi_set_mode(WIFI_MODE_AP); 
     esp_wifi_set_config(WIFI_IF_AP, &ap_config);

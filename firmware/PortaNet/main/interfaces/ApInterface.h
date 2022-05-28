@@ -54,6 +54,14 @@ unsigned int GetNumConnections(void);
 
 
 /**
+ * @brief Get the Max Connections object
+ * 
+ * @return unsigned int number of allowed max connections
+ */
+unsigned int GetMaxConnections(void);
+
+
+/**
  * @brief Get the current SSID name
  * 
  * @param ssid char array to pass the current name too
