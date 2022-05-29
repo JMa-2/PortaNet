@@ -4,9 +4,9 @@
 #include <stdint.h>
 #include <string.h>
 #include "esp_wifi.h"
-//#include "../interfaces/ApInterface.h"
 #include "../drivers/flags.h"
 #include "../drivers/flash.h"
+#include "esp_netif_sta_list.h"
 
 #define SSID_MEM        "ssid"
 #define PASSWORD_MEM    "password"
@@ -26,6 +26,7 @@ static void PwChangeHandler(char *newPass);
 static void RstNetHandler(void);
 static void NewMaxConnHandler(uint8_t newVal);
 static void NetDownHandler(void);
+static void FactoryResetHandler(void);
 
 static char ssid[MAX_SSID_LENGTH] = DEFAULT_SSID;
 static char password[MAX_PASSWORD_LENGTH] = DEFAULT_PASSWORD;
@@ -43,6 +44,7 @@ void AccessPointController(ApData data)
     PwChangeHandler(data.password);
     RstNetHandler();
     NewMaxConnHandler(data.maxConn);
+    FactoryResetHandler();
 }
 
 
@@ -356,6 +358,48 @@ static void NewMaxConnHandler(uint8_t newVal)
         (void)SetApFlag(AP_FLAG_RST_NET);
     }
 }
+
+
+
+void PassStaInfo(uint8_t* macbuffer, uint32_t* ipbuffer)
+{
+    wifi_sta_list_t stationList;
+    esp_wifi_ap_get_sta_list(&stationList);
+    
+    esp_netif_sta_list_t netifStationList;
+    esp_netif_get_sta_list(&stationList, &netifStationList);
+
+    for (int i=0; i<stationList.num; i++)
+    {
+        memcpy(macbuffer+(i*6), stationList.sta[i].mac, 6*sizeof(uint8_t));
+        memcpy(ipbuffer+i, &netifStationList.sta[i].ip.addr, sizeof(uint32_t));
+    }
+}
+
+
+
+static void FactoryResetHandler(void)
+{
+    if(!IsApFlagSet(AP_FLAG_REQ_RESET))
+        return;
+
+    bool temp = true;
+
+    temp = SetFlashSsid(DEFAULT_SSID) ? temp : false;
+    temp = SetFlashPassword(DEFAULT_PASSWORD) ? temp : false;
+    temp = SetFlashNumConn(DEFAULT_NUMCONNECTIONS) ? temp : false;
+
+    if (temp)
+    {
+        temp = StopWifi() ? temp : false;
+        if(temp)
+            AP_FLAGS = AP_FLAG_REQ_ON;
+    }
+
+    
+}
+
+
 
 
 

@@ -2,6 +2,7 @@
 #define APINTERFACE_H
 
 #include <stdbool.h>
+#include <stdint.h>
 
 #define SSID_LENGTH         32 //bytes
 #define PASSWORD_LENGTH     64 //bytes
@@ -104,6 +105,23 @@ bool ReqApOff(void);
  */
 bool ReqApOn(void);
 
+
+/**
+ * @brief Get the Sta list
+ * 
+ * @param macbuffer buffer to pass macs
+ * @param ipbuffer buffer to pass ips
+ */
+void GetStaList(uint8_t* macbuffer, uint32_t* ipbuffer);
+
+
+/**
+ * @brief request factory reset of access point
+ * 
+ * @return true if request accepted
+ * @return false if request denied
+ */
+bool ReqFactoryReset(void);
 
 
 

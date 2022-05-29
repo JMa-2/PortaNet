@@ -24,7 +24,8 @@ enum ApFlags {
     AP_FLAG_RST_NET     = 0b1 << 3,
     AP_FLAG_NEW_MAXCONN = 0b1 << 4,
     AP_FLAG_REQ_OFF     = 0b1 << 5,
-    AP_FLAG_REQ_ON      = 0b1 << 6 
+    AP_FLAG_REQ_ON      = 0b1 << 6,
+    AP_FLAG_REQ_RESET   = 0b1 << 7
 };
 
 
@@ -103,6 +104,15 @@ void PassSsid(char *str);
  * @param str address where password will be copied
  */
 void PassPassword(char *str);
+
+
+/**
+ * @brief pass the current list of macs
+ * 
+ * @param macbuffer buffer to pass the macs
+ * @param ipbuffer buffer to pass the ips
+ */
+void PassStaInfo(uint8_t* macbuffer, uint32_t* ipbuffer);
 
 
 

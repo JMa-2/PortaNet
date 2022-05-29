@@ -145,3 +145,19 @@ bool ReqApOn(void)
 }
 
 
+
+void GetStaList(uint8_t* macbuffer, uint32_t* ipbuffer)
+{
+    PassStaInfo(macbuffer, ipbuffer);
+}
+
+
+
+bool ReqFactoryReset(void)
+{
+    if (IsApFlagSet(AP_FLAG_REQ_RESET))
+        return false;
+
+    return SetApFlag(AP_FLAG_REQ_RESET);
+}
+

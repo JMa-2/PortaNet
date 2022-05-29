@@ -16,6 +16,7 @@
 #include "esp_console.h"
 #include "../interfaces/ApInterface.h"
 #include <string.h>
+#include <arpa/inet.h>
  
 
 static void RegisterAllCommands(void);
@@ -109,7 +110,11 @@ static void RegisterStatus(void)
 
 static int CmdReset(int argc, char **argv)
 {
-    //TODO add AP interface/controller functionality to handle this
+    if (ReqFactoryReset())
+        printf("\nFactory reset request accepted...\n\n");
+    else
+        printf("\nFactory reset request denied...\n\n");
+
     return 0;
 }
 
@@ -219,7 +224,34 @@ static void RegisterOff(void)
 
 static int CmdDevices(int argc, char **argv)
 {
-    //TODO add AP interface/controller functionality to handle this
+    unsigned int numConn; 
+    numConn = GetNumConnections();
+
+    uint8_t macs[numConn * 6];
+    uint32_t ips[numConn];
+
+    GetStaList(macs, ips);
+
+    printf("\n---IP ADDRESSES---\n");
+    for(int i=0; i<numConn; i++)
+    {
+        printf("%s\n", inet_ntoa(ips[i]));
+    }
+
+    printf("\n---MAC ADDRESSES---\n");
+    for(int i=0; i<(numConn*6); i=i+6)
+    {
+        for (int j=0; j<6; j++)
+        {
+            printf("%02x", macs[i+j]);
+            if(j<5)
+                printf(":");
+        }
+        printf("\n");
+    }
+    printf("\n");
+
+
     return 0;
 }
 
