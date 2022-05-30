@@ -10,8 +10,6 @@
  */
 
 #include "console.h"
-// #include "argtable3/argtable3.h"
-// #include "linenoise/linenoise.h"
 #include <stdio.h>
 #include "esp_system.h"
 

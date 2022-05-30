@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 #define MAX_SSID_LENGTH         32 //bytes
-#define MIN_SSID_LENGTH         5 //bytes
+#define MIN_SSID_LENGTH         5  //bytes
 #define MAX_PASSWORD_LENGTH     64 //bytes
 #define MIN_PASSWORD_LENGTH     10 //bytes
 #define MAX_NUMCONNECTIONS      10

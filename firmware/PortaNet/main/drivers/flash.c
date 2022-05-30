@@ -10,8 +10,6 @@ static nvs_handle_t handle;
 static bool InitFlash(void);
 static bool CheckInit(void);
 
-//TODO: be sure to use nvs_commit()
-
 
 static bool InitFlash(void)
 {
