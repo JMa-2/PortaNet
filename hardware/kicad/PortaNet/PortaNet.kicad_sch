@@ -7,7 +7,7 @@
   (title_block
     (title "PortaNet")
     (date "2022-05-01")
-    (rev "4.0")
+    (rev "4.1")
   )
 
   (lib_symbols
@@ -109,7 +109,7 @@
       (reference "C1") (unit 1) (value "1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/5e165934-7807-43ed-940e-6cc69877a643"
-      (reference "C2") (unit 1) (value "0.1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+      (reference "C2") (unit 1) (value "NC") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/3295f611-6ce3-4ca8-b291-32848720480c"
       (reference "C3") (unit 1) (value "0.1uF") (footprint "Capacitor_SMD:C_0603_1608Metric")
@@ -178,7 +178,7 @@
       (reference "SW1") (unit 1) (value "434133025816") (footprint "Button_Switch_SMD:SW_Push_1P1T_NO_Vertical_Wuerth_434133025816")
     )
     (path "/1e5d0253-acc2-4f0d-86a2-9343225c71a7/b97ff70e-3997-4b11-bc73-1102f98616a3"
-      (reference "U1") (unit 1) (value "ESP32-C3") (footprint "Package_DFN_QFN:QFN-32-1EP_5x5mm_P0.5mm_EP3.3x3.3mm_ThermalVias")
+      (reference "U1") (unit 1) (value "ESP32-C3FH4") (footprint "Package_DFN_QFN:QFN-32-1EP_5x5mm_P0.5mm_EP3.3x3.3mm_ThermalVias")
     )
     (path "/5873cb1d-2980-4d04-84de-c428523b74e7/f607fb80-96f7-4a77-bfa8-4b29c1d49858"
       (reference "U2") (unit 1) (value "AP2114HA-3.3TRG1") (footprint "Package_TO_SOT_SMD:SOT-223-3_TabPin2")
