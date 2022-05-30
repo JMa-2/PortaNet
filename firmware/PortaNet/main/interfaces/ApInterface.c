@@ -79,6 +79,13 @@ unsigned int GetNumConnections(void)
 
 
 
+unsigned int GetMaxConnections(void)
+{
+    return PassMaxConnSetting();
+}
+
+
+
 void GetSsid(char *ssid)
 {
     PassSsid(ssid);
@@ -108,4 +115,49 @@ bool ReqNewMaxConn(int maxConn)
 }
 
 
+
+bool ReqApOff(void)
+{
+    if (!IsApFlagSet(AP_FLAG_NET_UP))
+        return false;
+
+    if (IsApFlagSet(AP_FLAG_REQ_OFF))
+        return false;
+
+    SetApFlag(AP_FLAG_REQ_OFF);
+
+    return IsApFlagSet(AP_FLAG_REQ_OFF);
+}
+
+
+
+bool ReqApOn(void)
+{
+    if(IsApFlagSet(AP_FLAG_NET_UP))
+        return false;
+
+    if(IsApFlagSet(AP_FLAG_REQ_ON))
+        return false;
+
+    SetApFlag(AP_FLAG_REQ_ON);
+
+    return IsApFlagSet(AP_FLAG_REQ_ON);
+}
+
+
+
+void GetStaList(uint8_t* macbuffer, uint32_t* ipbuffer)
+{
+    PassStaInfo(macbuffer, ipbuffer);
+}
+
+
+
+bool ReqFactoryReset(void)
+{
+    if (IsApFlagSet(AP_FLAG_REQ_RESET))
+        return false;
+
+    return SetApFlag(AP_FLAG_REQ_RESET);
+}
 

@@ -2,6 +2,10 @@
 #define APINTERFACE_H
 
 #include <stdbool.h>
+#include <stdint.h>
+
+#define SSID_LENGTH         32 //bytes
+#define PASSWORD_LENGTH     64 //bytes
 
 /**
  * @brief freertos task for the wifi soft access point
@@ -51,6 +55,14 @@ unsigned int GetNumConnections(void);
 
 
 /**
+ * @brief Get the Max Connections object
+ * 
+ * @return unsigned int number of allowed max connections
+ */
+unsigned int GetMaxConnections(void);
+
+
+/**
  * @brief Get the current SSID name
  * 
  * @param ssid char array to pass the current name too
@@ -74,6 +86,42 @@ void GetPassword(char *password);
  * @return false if new number of max connections can't be used
  */
 bool ReqNewMaxConn(int maxConn);
+
+
+/**
+ * @brief request the access point be turned off
+ * 
+ * @return true if request allowed
+ * @return false if request not allowed
+ */
+bool ReqApOff(void);
+
+
+/**
+ * @brief request the access point be turned on
+ * 
+ * @return true if request allowed
+ * @return false if request not allowed
+ */
+bool ReqApOn(void);
+
+
+/**
+ * @brief Get the Sta list
+ * 
+ * @param macbuffer buffer to pass macs
+ * @param ipbuffer buffer to pass ips
+ */
+void GetStaList(uint8_t* macbuffer, uint32_t* ipbuffer);
+
+
+/**
+ * @brief request factory reset of access point
+ * 
+ * @return true if request accepted
+ * @return false if request denied
+ */
+bool ReqFactoryReset(void);
 
 
 

@@ -4,9 +4,9 @@
 #include <stdint.h>
 #include <string.h>
 #include "esp_wifi.h"
-#include "../interfaces/ApInterface.h"
 #include "../drivers/flags.h"
 #include "../drivers/flash.h"
+#include "esp_netif_sta_list.h"
 
 #define SSID_MEM        "ssid"
 #define PASSWORD_MEM    "password"
@@ -25,6 +25,8 @@ static void NewSsidHandler(char *newSsid);
 static void PwChangeHandler(char *newPass);
 static void RstNetHandler(void);
 static void NewMaxConnHandler(uint8_t newVal);
+static void NetDownHandler(void);
+static void FactoryResetHandler(void);
 
 static char ssid[MAX_SSID_LENGTH] = DEFAULT_SSID;
 static char password[MAX_PASSWORD_LENGTH] = DEFAULT_PASSWORD;
@@ -32,15 +34,17 @@ static uint8_t numConnSetting = DEFAULT_NUMCONNECTIONS;
 
 static esp_netif_t * networkInterface;
 
-static volatile unsigned int AP_FLAGS = 0;
+static volatile unsigned int AP_FLAGS = AP_FLAG_REQ_ON;
 
 void AccessPointController(ApData data)
 {
     NetUpHandler();
+    NetDownHandler();
     NewSsidHandler(data.ssid);
     PwChangeHandler(data.password);
     RstNetHandler();
     NewMaxConnHandler(data.maxConn);
+    FactoryResetHandler();
 }
 
 
@@ -129,7 +133,7 @@ static bool GetFlashSsid(char *id, size_t *len)
     if (temp)
         return true;
     
-    return SetFlashSsid(id);
+    return SetFlashSsid(ssid);
 }
 
 
@@ -143,7 +147,7 @@ static bool GetFlashPassword(char *pass, size_t *len)
     if (temp)
         return true;
 
-    return SetFlashPassword(pass);
+    return SetFlashPassword(password);
 }
 
 
@@ -157,7 +161,7 @@ static bool GetFlashNumConn(uint8_t *numConn)
     if (temp)
         return true;
     
-    return SetFlashNumConn(*numConn);
+    return SetFlashNumConn(numConnSetting);
 }
 
 
@@ -207,12 +211,6 @@ static bool StartWifi(char *id, char *pass, uint8_t numConn)
 
     memcpy(ap_config.ap.ssid, id, sizeof(ap_config.ap.ssid));
     memcpy(ap_config.ap.password, pass, sizeof(ap_config.ap.password));
-    
-    printf("\n");
-    printf("SSID --- %s\n", ap_config.ap.ssid);
-    printf("PASSWORD --- %s\n", ap_config.ap.password);
-    printf("NUMCONN --- %i\n", numConn);
-    printf("\n");
 
     esp_wifi_set_mode(WIFI_MODE_AP); 
     esp_wifi_set_config(WIFI_IF_AP, &ap_config);
@@ -242,6 +240,9 @@ static void NetUpHandler(void)
 {
     if (IsApFlagSet(AP_FLAG_NET_UP))
         return;
+
+    if (!IsApFlagSet(AP_FLAG_REQ_ON))
+        return;
     
     bool temp = true;
     size_t ssidLen, passLen;
@@ -255,6 +256,7 @@ static void NetUpHandler(void)
     if (temp)
     {
         (void)SetApFlag(AP_FLAG_NET_UP);
+        (void)ResetApFlag(AP_FLAG_REQ_ON);
     }
     else
     {
@@ -263,6 +265,23 @@ static void NetUpHandler(void)
     }
 }
 
+
+static void NetDownHandler(void)
+{
+    if(!IsApFlagSet(AP_FLAG_NET_UP))
+        return;
+
+    if(!IsApFlagSet(AP_FLAG_REQ_OFF))
+        return;
+
+    bool temp = StopWifi();
+
+    if(temp)
+    {
+        (void)ResetApFlag(AP_FLAG_NET_UP);
+        (void)ResetApFlag(AP_FLAG_REQ_OFF);
+    }
+}
 
 
 static void NewSsidHandler(char *newSsid)
@@ -306,14 +325,19 @@ static void RstNetHandler(void)
     if (!IsApFlagSet(AP_FLAG_RST_NET))
         return;
 
+    ResetApFlag(AP_FLAG_RST_NET);
+
+    if(!IsApFlagSet(AP_FLAG_NET_UP))
+        return;
+
     bool temp = true;
 
     temp = StopWifi() ? temp : false;
 
     if (temp)
     {
-        (void)ResetApFlag(AP_FLAG_RST_NET);
         (void)ResetApFlag(AP_FLAG_NET_UP);
+        (void)SetApFlag(AP_FLAG_REQ_ON);
     }
 }
 
@@ -334,6 +358,48 @@ static void NewMaxConnHandler(uint8_t newVal)
         (void)SetApFlag(AP_FLAG_RST_NET);
     }
 }
+
+
+
+void PassStaInfo(uint8_t* macbuffer, uint32_t* ipbuffer)
+{
+    wifi_sta_list_t stationList;
+    esp_wifi_ap_get_sta_list(&stationList);
+    
+    esp_netif_sta_list_t netifStationList;
+    esp_netif_get_sta_list(&stationList, &netifStationList);
+
+    for (int i=0; i<stationList.num; i++)
+    {
+        memcpy(macbuffer+(i*6), stationList.sta[i].mac, 6*sizeof(uint8_t));
+        memcpy(ipbuffer+i, &netifStationList.sta[i].ip.addr, sizeof(uint32_t));
+    }
+}
+
+
+
+static void FactoryResetHandler(void)
+{
+    if(!IsApFlagSet(AP_FLAG_REQ_RESET))
+        return;
+
+    bool temp = true;
+
+    temp = SetFlashSsid(DEFAULT_SSID) ? temp : false;
+    temp = SetFlashPassword(DEFAULT_PASSWORD) ? temp : false;
+    temp = SetFlashNumConn(DEFAULT_NUMCONNECTIONS) ? temp : false;
+
+    if (temp)
+    {
+        temp = StopWifi() ? temp : false;
+        if(temp)
+            AP_FLAGS = AP_FLAG_REQ_ON;
+    }
+
+    
+}
+
+
 
 
 

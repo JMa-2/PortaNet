@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 #define MAX_SSID_LENGTH         32 //bytes
-#define MIN_SSID_LENGTH         5 //bytes
+#define MIN_SSID_LENGTH         5  //bytes
 #define MAX_PASSWORD_LENGTH     64 //bytes
 #define MIN_PASSWORD_LENGTH     10 //bytes
 #define MAX_NUMCONNECTIONS      10
@@ -22,9 +22,11 @@ enum ApFlags {
     AP_FLAG_NEW_SSID    = 0b1 << 1,
     AP_FLAG_PW_CHANGE   = 0b1 << 2,
     AP_FLAG_RST_NET     = 0b1 << 3,
-    AP_FLAG_NEW_MAXCONN = 0b1 << 4
+    AP_FLAG_NEW_MAXCONN = 0b1 << 4,
+    AP_FLAG_REQ_OFF     = 0b1 << 5,
+    AP_FLAG_REQ_ON      = 0b1 << 6,
+    AP_FLAG_REQ_RESET   = 0b1 << 7
 };
-//}AP_FLAGS;
 
 
 typedef struct ApData{
@@ -102,6 +104,15 @@ void PassSsid(char *str);
  * @param str address where password will be copied
  */
 void PassPassword(char *str);
+
+
+/**
+ * @brief pass the current list of macs
+ * 
+ * @param macbuffer buffer to pass the macs
+ * @param ipbuffer buffer to pass the ips
+ */
+void PassStaInfo(uint8_t* macbuffer, uint32_t* ipbuffer);
 
 
 

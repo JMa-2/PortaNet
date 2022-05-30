@@ -2,15 +2,12 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "interfaces/ApInterface.h"
-#include "interfaces/DisplayInterface.h"
-#include "interfaces/TerminalInterface.h"
+#include "interfaces/ConsoleInterface.h"
 
 void app_main(void)
 {
-	xTaskCreate(&TaskAccessPoint, "TaskAccessPoint", 4096, NULL, 1, NULL);
-  
-  //TODO: add serial terminal task
+	xTaskCreate(&TaskAccessPoint, "TaskAccessPoint", 4096, NULL, 2, NULL);
 
-  //TODO: add OLED display task
-
+	xTaskCreate(&TaskConsole, "TaskConsole", 4096, NULL, 1, NULL);
+	
 }

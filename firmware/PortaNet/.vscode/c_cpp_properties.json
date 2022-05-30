@@ -3,7 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/home/jmaier/esp/esp-idf/components/freertos/FreeRTOS-Kernel/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
