@@ -4,9 +4,9 @@
  * @brief serial console controller source file
  * @version 0.1
  * @date 2022-05-22
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
 #include "ConsoleController.h"
@@ -17,7 +17,7 @@
 #include "../interfaces/ApInterface.h"
 #include <string.h>
 #include <arpa/inet.h>
- 
+
 
 static void RegisterAllCommands(void);
 static int CmdStatus(int argc, char **argv);
@@ -79,7 +79,7 @@ static int CmdStatus(int argc, char **argv)
     GetSsid(ssid);
     GetPassword(password);
 
-    
+
     printf("\n---SSID---\n");
     printf("%s\n\n", ssid);
     printf("---PASSWORD---\n");
@@ -94,7 +94,7 @@ static int CmdStatus(int argc, char **argv)
 
 static void RegisterStatus(void)
 {
-    const esp_console_cmd_t status_cmd = 
+    const esp_console_cmd_t status_cmd =
     {
         .command = "status",
         .help = "Status of the AP including SSID, password, max number of connections, and wifi channel",
@@ -143,7 +143,7 @@ static int CmdRestart(int argc, char **argv)
 
     else
         printf("\n Restart request denied...\n\n");
-    
+
     return 0;
 }
 
@@ -224,10 +224,10 @@ static void RegisterOff(void)
 
 static int CmdDevices(int argc, char **argv)
 {
-    unsigned int numConn; 
+    unsigned int numConn;
     numConn = GetNumConnections();
 
-    uint8_t macs[numConn * 6];
+    uint8_t macs[numConn * MAC_ADDR_LENGTH];
     uint32_t ips[numConn];
 
     GetStaList(macs, ips);
@@ -239,7 +239,7 @@ static int CmdDevices(int argc, char **argv)
     }
 
     printf("\n---MAC ADDRESSES---\n");
-    for(int i=0; i<(numConn*6); i=i+6)
+    for(int i=0; i<(numConn*MAC_ADDR_LENGTH); i=i+MAC_ADDR_LENGTH)
     {
         for (int j=0; j<6; j++)
         {
@@ -272,7 +272,7 @@ static void RegisterDevices(void)
 }
 
 
-static struct 
+static struct
 {
     struct arg_str *ssid;
     struct arg_end *end;
@@ -293,7 +293,7 @@ static int CmdSsid(int argc, char **argv)
     else
         printf("\nFailed to request new SSID of %s\n\n", ssid_args.ssid->sval[0]);
 
-    
+
     return 0;
 }
 
@@ -304,7 +304,7 @@ static void RegisterSsid(void)
     ssid_args.ssid = arg_str0(NULL, NULL, "<ssid>", "SSID of AP");
     ssid_args.end = arg_end(2);
 
-    const esp_console_cmd_t ssid_cmd = 
+    const esp_console_cmd_t ssid_cmd =
     {
         .command = "ssid",
         .help = "Request new SSID of AP and restart the AP.",
@@ -318,7 +318,7 @@ static void RegisterSsid(void)
 
 
 
-static struct 
+static struct
 {
     struct arg_str *pw;
     struct arg_end *end;
@@ -339,7 +339,7 @@ static int CmdPassword(int argc, char **argv)
     else
         printf("\nFailed to request new password of %s\n\n", pw_args.pw->sval[0]);
 
-    
+
     return 0;
 }
 
@@ -350,7 +350,7 @@ static void RegisterPassword(void)
     pw_args.pw = arg_str0(NULL, NULL, "<pw>", "Password of AP");
     pw_args.end = arg_end(2);
 
-    const esp_console_cmd_t pw_cmd = 
+    const esp_console_cmd_t pw_cmd =
     {
         .command = "password",
         .help = "Request new password of AP and restart the AP.",
@@ -364,7 +364,7 @@ static void RegisterPassword(void)
 
 
 
-static struct 
+static struct
 {
     struct arg_int *conn;
     struct arg_end *end;
@@ -385,7 +385,7 @@ static int CmdMaxConn(int argc, char **argv)
     else
         printf("\nFailed to request new max connection quantity of %i\n\n", maxconn_args.conn->ival[0]);
 
-    
+
     return 0;
 }
 
@@ -396,7 +396,7 @@ static void RegisterMaxConn(void)
     maxconn_args.conn = arg_int0(NULL, NULL, "<numconn>", "Number of max connections.");
     maxconn_args.end = arg_end(2);
 
-    const esp_console_cmd_t maxconn_cmd = 
+    const esp_console_cmd_t maxconn_cmd =
     {
         .command = "maxconn",
         .help = "Request new number of max connections for AP and restart the AP.",
@@ -407,5 +407,3 @@ static void RegisterMaxConn(void)
 
     esp_console_cmd_register(&maxconn_cmd);
 }
-
-

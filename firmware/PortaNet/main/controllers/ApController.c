@@ -132,7 +132,7 @@ static bool GetFlashSsid(char *id, size_t *len)
 
     if (temp)
         return true;
-    
+
     return SetFlashSsid(ssid);
 }
 
@@ -160,7 +160,7 @@ static bool GetFlashNumConn(uint8_t *numConn)
 
     if (temp)
         return true;
-    
+
     return SetFlashNumConn(numConnSetting);
 }
 
@@ -212,7 +212,7 @@ static bool StartWifi(char *id, char *pass, uint8_t numConn)
     memcpy(ap_config.ap.ssid, id, sizeof(ap_config.ap.ssid));
     memcpy(ap_config.ap.password, pass, sizeof(ap_config.ap.password));
 
-    esp_wifi_set_mode(WIFI_MODE_AP); 
+    esp_wifi_set_mode(WIFI_MODE_AP);
     esp_wifi_set_config(WIFI_IF_AP, &ap_config);
     esp_err_t err = esp_wifi_start();
 
@@ -243,7 +243,7 @@ static void NetUpHandler(void)
 
     if (!IsApFlagSet(AP_FLAG_REQ_ON))
         return;
-    
+
     bool temp = true;
     size_t ssidLen, passLen;
 
@@ -363,15 +363,17 @@ static void NewMaxConnHandler(uint8_t newVal)
 
 void PassStaInfo(uint8_t* macbuffer, uint32_t* ipbuffer)
 {
+    const int MacAddrLength = 6;
+    
     wifi_sta_list_t stationList;
     esp_wifi_ap_get_sta_list(&stationList);
-    
+
     esp_netif_sta_list_t netifStationList;
     esp_netif_get_sta_list(&stationList, &netifStationList);
 
     for (int i=0; i<stationList.num; i++)
     {
-        memcpy(macbuffer+(i*6), stationList.sta[i].mac, 6*sizeof(uint8_t));
+        memcpy(macbuffer+(i*MacAddrLength), stationList.sta[i].mac, 6*sizeof(uint8_t));
         memcpy(ipbuffer+i, &netifStationList.sta[i].ip.addr, sizeof(uint32_t));
     }
 }
@@ -396,10 +398,5 @@ static void FactoryResetHandler(void)
             AP_FLAGS = AP_FLAG_REQ_ON;
     }
 
-    
+
 }
-
-
-
-
-
