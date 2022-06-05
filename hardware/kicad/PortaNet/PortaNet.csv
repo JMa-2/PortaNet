@@ -1,28 +1,25 @@
-"Source:","/home/jmaier/Gits/PortaNet/hardware/kicad/PortaNet/PortaNet.kicad_sch"
-"Date:","Sat 12 Mar 2022 05:55:19 PM EST"
-"Tool:","Eeschema 6.0.2+dfsg-1"
-"Generator:","/usr/share/kicad/plugins/bom_csv_grouped_by_value_with_fp.py"
-"Component Count:","32"
-"Ref","Qnty","Value","Cmp name","Footprint","Description","Vendor"
-"AE1, ","1","ANT3216LL00R2400A","Antenna_Shield","JoesFootprints:ANT3216LL00R2400A","Antenna with extra pin for shielding",""
-"C3, ","1","0.1uF","C_Small","Capacitor_SMD:C_0603_1608Metric","Unpolarized capacitor, small symbol",""
-"C4, C10, ","2","10uF","C_Small","Capacitor_SMD:C_0603_1608Metric","Unpolarized capacitor, small symbol",""
-"C9, ","1",".1uF","C_Small","Capacitor_SMD:C_0603_1608Metric","Unpolarized capacitor, small symbol",""
-"C11, C12, ","2","7pF","C_Small","Capacitor_SMD:C_0603_1608Metric","Unpolarized capacitor, small symbol",""
-"D1, D4, ","2","DSS13UTR","D_Schottky","Diode_SMD:D_SOD-123F","Schottky diode",""
-"D2, ","1","L196L-UEC-TR","LED","LED_SMD:LED_0603_1608Metric","Light emitting diode",""
-"D3, ","1","L196L-QYC-TR","LED","LED_SMD:LED_0603_1608Metric","Light emitting diode",""
-"H1, ","1","MountingHole","MountingHole","MountingHole:MountingHole_2.5mm","Mounting Hole without connection",""
-"J1, ","1","UART","Conn_01x03","Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical","Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)",""
-"J2, ","1","Molex 0480370001","USB_A","JoesFootprints:Molex_0480370001","USB Type A connector",""
-"J3, ","1","OLED_PINS","Conn_01x04","JoesFootprints:OLED_0.91in_i2c","Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)",""
-"J4, ","1","GRPB052VWVN-RC","Conn_ARM_JTAG_SWD_10","Connector_PinHeader_1.27mm:PinHeader_2x05_P1.27mm_Vertical","Cortex Debug Connector, standard ARM Cortex-M SWD and JTAG interface",""
-"R1, ","1","10k","R_Small_US","Resistor_SMD:R_0805_2012Metric","Resistor, small US symbol",""
-"R2, R3, R4, ","3","0","R_Small_US","Resistor_SMD:R_0805_2012Metric","Resistor, small US symbol",""
-"R5, R6, ","2","4.7k","R_Small_US","Resistor_SMD:R_0805_2012Metric","Resistor, small US symbol",""
-"R7, R8, ","2","22","R_Small_US","Resistor_SMD:R_0805_2012Metric","Resistor, small US symbol",""
-"R9, R10, ","2","1k","R_Small_US","Resistor_SMD:R_0805_2012Metric","Resistor, small US symbol",""
-"TP3, TP4, TP5, ","3","TestPoint","TestPoint","TestPoint:TestPoint_Pad_1.0x1.0mm","test point",""
-"U1, ","1","ESP32-C3","ESP32-C3","Package_DFN_QFN:QFN-32-1EP_5x5mm_P0.5mm_EP3.3x3.3mm_ThermalVias","",""
-"U2, ","1","AP2114HA-3.3TRG1","AP2114HA-3.3TRG1","Package_TO_SOT_SMD:SOT-223-3_TabPin2","",""
-"Y1, ","1","FL400WFQA1","Crystal_GND24","Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm","Four pin crystal, GND on pins 2 and 4",""
+Source:,"PortaNet BOM, v4.1",,,
+Date:,Mon 30 May 2022 05:56:16 PM EDT,,,
+Tool:,Eeschema 6.0.5+dfsg-1,,,
+Generator:,/usr/share/kicad/plugins/bom_csv_grouped_by_value_with_fp.py,,,
+Component Count:,27,,,
+,,,,
+,,,,
+Ref,Qnty,Value,Cmp name,Footprint
+"C1, ",1,1uF,C_Small,Capacitor_SMD:C_0603_1608Metric
+"C2, ",1,NC,C_Small,Capacitor_SMD:C_0603_1608Metric
+"C3, C7, C13, ",3,0.1uF,C_Small,Capacitor_SMD:C_0603_1608Metric
+"C4, C8, C10, C14, ",4,10uF,C_Small,Capacitor_SMD:C_0603_1608Metric
+"C5, C6, ",2,TBD,C_Small,Capacitor_SMD:C_0603_1608Metric
+"C9, ",1,.1uF,C_Small,Capacitor_SMD:C_0603_1608Metric
+"C11, C12, ",2,7pF,C_Small,Capacitor_SMD:C_0603_1608Metric
+"D1, ",1,DSS13UTR,D_Schottky,Diode_SMD:D_SOD-123F
+"J1, ",1,SMA,Conn_Coaxial,Connector_Coaxial:SMA_Amphenol_132134_Vertical
+"J2, ",1,Molex 0480370001,USB_A,JoesFootprints:Molex_0480370001
+"L1, ",1,TBD,L,Inductor_SMD:L_0805_2012Metric_Pad1.15x1.40mm_HandSolder
+"R1, R2, R3, ",3,10k,R_Small_US,Resistor_SMD:R_0805_2012Metric
+"R4, R5, ",2,22,R_Small_US,Resistor_SMD:R_0805_2012Metric
+"SW1, ",1,434133025816,SW_SPST,Button_Switch_SMD:SW_Push_1P1T_NO_Vertical_Wuerth_434133025816
+"U1, ",1,ESP32-C3,ESP32-C3,Package_DFN_QFN:QFN-32-1EP_5x5mm_P0.5mm_EP3.3x3.3mm_ThermalVias
+"U2, ",1,AP2114HA-3.3TRG1,AP2114HA-3.3TRG1,Package_TO_SOT_SMD:SOT-223-3_TabPin2
+"Y1, ",1,FL400WFQA1,Crystal_GND24,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm
