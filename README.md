@@ -32,32 +32,32 @@ The PortaNet is a wifi access point (AP) using the Espressif ESP32-C3FH4 microco
 
 # *HARDWARE*
 ### Hardware General
-The design critical components consist of the [Espressif ESP32-C3FH4](https://www.espressif.com/en/products/socs/esp32-c3). The ESP32-C3FH4 microcontroller is a ESP32-C3 variant with 4MB internal flash. Simply buying the "normal" ESP32-C3 variant will not suffice due to the lack of internal flash.
+The critical component consists of the [Espressif ESP32-C3FH4](https://www.espressif.com/en/products/socs/esp32-c3). The ESP32-C3FH4 microcontroller is a ESP32-C3 variant with 4MB internal flash. Simply buying the "normal" ESP32-C3 variant will not suffice due to the lack of internal flash.
 
 The design utilizes a 50 $\Omega$ impedance, 2.4 GHz wifi antenna. Antennas such as [this](https://www.amazon.com/gp/product/B07D1Z3W7T/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) and [this](https://www.amazon.com/gp/product/B0991PKTDL/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) have worked successfully. There is an unused $\pi$-matching circuit that could aid in supporting other antennas.
 
 ### Hardware Tools
-KiCad v6 was utilized as the EDA tool. The KiCad project can be found in the [hardware directory.](hardware/kicad/PortaNet/) Additionally my [KiCad Library](http://192.168.1.19:3000/JMa/KiCad_Library) may contain needed symbols and footprints that the project references.
+KiCad v6 was utilized as the EDA tool. The KiCad project can be found in the [hardware directory](hardware/kicad/PortaNet/). Additionally my [KiCad Library](http://192.168.1.19:3000/JMa/KiCad_Library) may contain needed symbols and footprints that the project references.
 
 ### Schematic
 The current schematic can be seen [here](hardware/kicad/PortaNet_SCH.pdf). 
 
-On page 2 of the schematic, the only oddity worth explaining is the NC of C2. Having C2 installed results in the GPIO9 (pin 15) being pulled low. Resulting in firmware getting stuck in the bootloader.
+On page 2 of the schematic, the only oddity worth explaining is the NC of C2. Having C2 installed results in the GPIO9 (pin 15) being pulled low. Resulting in the firmware getting stuck in the bootloader.
 
-On page 3 of the schematic, lives the unused $\pi$-matching circuit labeled the `Antenna` section. If the $\pi$-matching circuit does not want to be used, then `L1` should be shorted with a 0 $\Omega$ resistor.
+On page 3 of the schematic, lives the unused $\pi$-matching circuit labeled `Antenna`. If the $\pi$-matching circuit does not want to be used, then `L1` should be shorted with a 0 $\Omega$ resistor.
 
-On page 3 also lives the `Crystal` section. While the load capacitors are labeled 7pF, I have used 8pF caps with no issues thus far. 
+On page 3 also lives the `Crystal` section. While the load capacitors are labeled 7pF, 8pF caps work with no issues thus far. 
 
 ### PCB Layout
 The board layout consists of 4 layers, with components on both the top and bottom layers. 
 
-The layer structure consists of the top layer being a signal layer, the second and third layer being GND layers, and the bottom layer begin a PWR/signal layer. The top layer or layer 1 of the board is structured to isolate noise sources from other hardware sections. The sub-circuits on the top layer are split into PWR/USB, microcontroller (uC), crystal (XTAL), and radio frequency (RF) sections. GND traces with vias surround the RF and XTAL sections of the top layer.
+The layer structure consists of the top layer being a signal layer, the second and third layer being GND layers, and the bottom layer being a PWR/signal layer. The top layer or layer 1 of the board is structured to isolate noise sources from other hardware sections. The sub-circuits on the top layer are split into PWR/USB, microcontroller (uC), crystal (XTAL), and radio frequency (RF) sections. GND traces with vias surround the RF and XTAL sections of the top layer.
 
 ![PCB Layout](hardware/kicad/PortaNet_PcbLayers.png)
 ![Top Layer Routing](hardware/kicad/PortaNet_TopPCB.png)
 
 ### BOM
-The BOM can be found [here](hardware/kicad/PortaNet/PortaNet.csv). As well as a copy and paste is below. It is again important to note that the ESP32-C3 part purchased must be a part that contains internal flash.
+The BOM can be found [here](hardware/kicad/PortaNet/PortaNet.csv). As well as a copy and paste is below. It is again important to note that **the ESP32-C3 part purchased must be a part that contains internal flash.**
 
 | Ref               | Qnty | Value            | Cmp name         | Footprint                                                       |
 |-------------------|------|------------------|------------------|-----------------------------------------------------------------|
@@ -127,7 +127,7 @@ If issues arise, Espressif has good documentation located [here](https://docs.es
 
 # *HOW TO USE*
 ### Use General
-Since the devices uses USB 2.0, the operating voltage is 5V. Typical PC receptacles work just fine and even phone/device charging bricks should work without issue. The device draws less that 100mA so there shouldn't be power rating issues to monitor.
+Since the device uses USB 2.0, the operating voltage is 5V. Typical PC USB receptacles work just fine and even phone/device charging bricks should work without issue. The device draws less that 100mA so there shouldn't be power rating issues to monitor.
 
 ### PuTTy
 At this point, PuTTy is the only terminal emulator that the device has really been tested with. PicoCom, the linux utility, appears to work as well.
