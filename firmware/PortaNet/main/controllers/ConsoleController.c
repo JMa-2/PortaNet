@@ -142,7 +142,7 @@ static int CmdRestart(int argc, char **argv)
         printf("\nRestart request accepted...\n\n");
 
     else
-        printf("\n Restart request denied...\n\n");
+        printf("\nRestart request denied...\n\n");
 
     return 0;
 }
