@@ -119,7 +119,7 @@ example: `. ~/esp-idf/export.sh`
 
 <br>
 
-If issues arise Espressif has good documentation located [here](https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/get-started/linux-macos-setup.html).
+If issues arise, Espressif has good documentation located [here](https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/get-started/linux-macos-setup.html).
 
 <br>
 <br>
@@ -127,8 +127,44 @@ If issues arise Espressif has good documentation located [here](https://docs.esp
 
 # *HOW TO USE*
 ### Use General
+Since the devices uses USB 2.0, the operating voltage is 5V. Typical PC receptacles work just fine and even phone/device charging bricks should work without issue. The device draws less that 100mA so there shouldn't be power rating issues to monitor.
+
 ### PuTTy
+At this point, PuTTy is the only terminal emulator that the device has really been tested with. PicoCom, the linux utility, appears to work as well.
+
+PuTTy can be downloaded from [here](https://www.putty.org/) and it is widely used enough to easily find tutorials via Google or Youtube. 
+
 ### Console Commands
+`help`<br>
+Print the list of registered commands.
+
+`status`<br>
+Status of the AP which includes info such as the SSID, password, max number of connections, and wifi channel.
+
+`reset`<br>
+Reset the AP to its default credentials
+
+`on`<br>
+Turn on the AP.
+
+`off`<br>
+Turn off the AP.
+
+`devices`<br>
+Show info on currently connected devices.
+
+`ssid <NAME>`<br>
+Request new SSID of AP.
+
+`password <PW>`<br>
+Request new password of AP.
+
+`maxconn <#>`<br>
+Request new number of max connection of the AP.
+
+`restart`<br>
+Request the AP to restart.
+
 
 <br>
 <br>
