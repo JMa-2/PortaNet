@@ -1,5 +1,4 @@
 # *TABLE OF CONTENTS*
----
 - [Introduction](#introduction)
 - [Hardware](#hardware)
     - [Hardware General](#hardware-general)
@@ -22,18 +21,16 @@
 <br>
 
 # *INTRODUCTION*
----
 <br>
 <br>
 <br>
 
 # *HARDWARE*
----
-## Hardware General
-## Hardware Tools
-## Schematic
-## PCB Layout
-## BOM
+### Hardware General
+### Hardware Tools
+### Schematic
+### PCB Layout
+### BOM
 
 
 <br>
@@ -41,21 +38,19 @@
 <br>
 
 # *SOFTWARE*
----
-## Software General
-## Software Tools
-## Architecture
-## Building
-## Flashing
+### Software General
+### Software Tools
+### Architecture
+### Building
+### Flashing
 <br>
 <br>
 <br>
 
 # *HOW TO USE*
----
-## Use General
-## PuTTy
-## Console Commands
+### Use General
+### PuTTy
+### Console Commands
 <br>
 <br>
 <br>
