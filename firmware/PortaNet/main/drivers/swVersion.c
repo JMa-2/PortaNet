@@ -14,7 +14,7 @@
 
 
 #define MAJOR_VERSION_NUM       "1"
-#define MINOR_VERSION_NUM       "1"
+#define MINOR_VERSION_NUM       "2"
 
 #define VERSION_PREFIX          MAJOR_VERSION_NUM "." MINOR_VERSION_NUM "."
 

@@ -114,6 +114,25 @@
 - register the maxconn command
 <br><br/>
 
+`CmdSwVersion`
+
+- command function to request the version of the firmware in use
+<br><br/>
+
+`RegisterSwVersion`
+
+- register the software version command
+<br><br/>
+
+`CmdChannel`
+
+- command function to request the wifi channel be changed
+<br><br/>
+
+`RegisterChannel`
+
+- register the wifi channel change command
+
 ***
 
 ## *CONSOLE DRIVER*
@@ -170,4 +189,12 @@
 
 - change the number of max device connections and restart the wifi access point 
 <br><br/>
+
+`version`
+
+- shows the current version of firmware
+
+`channel <#>`
+
+- change the wifi channel and restart the access point
 

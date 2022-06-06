@@ -11,26 +11,31 @@
 #define SSID_MEM        "ssid"
 #define PASSWORD_MEM    "password"
 #define NUMCONN_MEM     "conn"
+#define WIFICHANNEL_MEM "channel"
 
 static bool GetFlashSsid(char *id, size_t *len);
 static bool GetFlashPassword(char *pass, size_t *len);
 static bool GetFlashNumConn(uint8_t *numConn);
+static bool GetFlashWifiChannel(uint8_t *channel);
 static bool SetFlashSsid(char *id);
 static bool SetFlashPassword(char *pass);
 static bool SetFlashNumConn(uint8_t numConn);
-static bool StartWifi(char *id, char *pass, uint8_t numConn);
+static bool SetFlashWifiChannel(uint8_t channel);
+static bool StartWifi(char *id, char *pass, uint8_t numConn, uint8_t wifiCh);
 static bool StopWifi(void);
 static void NetUpHandler(void);
 static void NewSsidHandler(char *newSsid);
 static void PwChangeHandler(char *newPass);
 static void RstNetHandler(void);
 static void NewMaxConnHandler(uint8_t newVal);
+static void NewWifiChannelHandler(uint8_t channel);
 static void NetDownHandler(void);
 static void FactoryResetHandler(void);
 
-static char ssid[MAX_SSID_LENGTH] = DEFAULT_SSID;
-static char password[MAX_PASSWORD_LENGTH] = DEFAULT_PASSWORD;
-static uint8_t numConnSetting = DEFAULT_NUMCONNECTIONS;
+static char ssid[MAX_SSID_LENGTH]               = DEFAULT_SSID;
+static char password[MAX_PASSWORD_LENGTH]       = DEFAULT_PASSWORD;
+static uint8_t numConnSetting                   = DEFAULT_NUMCONNECTIONS;
+static uint8_t wifiChannel                      = DEFAULT_WIFI_CHANNEL;
 
 static esp_netif_t * networkInterface;
 
@@ -44,6 +49,7 @@ void AccessPointController(ApData data)
     PwChangeHandler(data.password);
     RstNetHandler();
     NewMaxConnHandler(data.maxConn);
+    NewWifiChannelHandler(data.channel);
     FactoryResetHandler();
 }
 
@@ -166,6 +172,20 @@ static bool GetFlashNumConn(uint8_t *numConn)
 
 
 
+static bool GetFlashWifiChannel(uint8_t *channel)
+{
+    bool temp;
+
+    temp = u8ReadFlash(WIFICHANNEL_MEM, channel);
+
+    if (temp)
+        return true;
+
+    return SetFlashWifiChannel(wifiChannel);
+}
+
+
+
 static bool SetFlashSsid(char *id)
 {
     return strWriteFlash(SSID_MEM, id);
@@ -187,7 +207,13 @@ static bool SetFlashNumConn(uint8_t numConn)
 
 
 
-static bool StartWifi(char *id, char *pass, uint8_t numConn)
+static bool SetFlashWifiChannel(uint8_t channel)
+{
+    return u8WriteFlash(WIFICHANNEL_MEM, channel);
+}
+
+
+static bool StartWifi(char *id, char *pass, uint8_t numConn, uint8_t wifiCh)
 {
 
     esp_netif_init();
@@ -200,7 +226,7 @@ static bool StartWifi(char *id, char *pass, uint8_t numConn)
 
     wifi_config_t ap_config = {
         .ap = {
-            .channel = WIFI_CHANNEL,
+            .channel = wifiCh,
             .max_connection = numConn,
             .authmode = WIFI_AUTH_WPA_WPA2_PSK,
             .pmf_cfg = {
@@ -250,8 +276,9 @@ static void NetUpHandler(void)
     temp = GetFlashSsid(ssid, &ssidLen) ? temp : false;
     temp = GetFlashPassword(password, &passLen) ? temp : false;
     temp = GetFlashNumConn(&numConnSetting) ? temp : false;
+    temp = GetFlashWifiChannel(&wifiChannel) ? temp : false;
 
-    temp = StartWifi(ssid, password, numConnSetting) ? temp : false;
+    temp = StartWifi(ssid, password, numConnSetting, wifiChannel) ? temp : false;
 
     if (temp)
     {
@@ -361,6 +388,24 @@ static void NewMaxConnHandler(uint8_t newVal)
 
 
 
+static void NewWifiChannelHandler(uint8_t channel)
+{
+    if(!IsApFlagSet(AP_FLAG_NEW_CHANNEL))
+        return;
+
+    bool temp = true;
+
+    temp = SetFlashWifiChannel(channel) ? temp : false;
+
+    if(temp)
+    {
+        (void)ResetApFlag(AP_FLAG_NEW_CHANNEL);
+        (void)SetApFlag(AP_FLAG_RST_NET);
+    }
+}
+
+
+
 void PassStaInfo(uint8_t* macbuffer, uint32_t* ipbuffer)
 {
     const int MacAddrLength = 6;
@@ -390,13 +435,22 @@ static void FactoryResetHandler(void)
     temp = SetFlashSsid(DEFAULT_SSID) ? temp : false;
     temp = SetFlashPassword(DEFAULT_PASSWORD) ? temp : false;
     temp = SetFlashNumConn(DEFAULT_NUMCONNECTIONS) ? temp : false;
+    temp = SetFlashWifiChannel(DEFAULT_WIFI_CHANNEL) ? temp : false;
 
     if (temp)
     {
         temp = StopWifi() ? temp : false;
+
         if(temp)
             AP_FLAGS = AP_FLAG_REQ_ON;
     }
 
 
+}
+
+
+
+uint8_t PassWifiChannel(void)
+{
+    return wifiChannel + WIFI_CHANNEL_ERROR;
 }
