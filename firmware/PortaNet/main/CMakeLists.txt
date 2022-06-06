@@ -7,4 +7,5 @@ idf_component_register(SRCS
 "drivers/flags.c"
 "drivers/flash.c"
 "drivers/console.c"
+"drivers/swVersion.c"
 INCLUDE_DIRS ".")

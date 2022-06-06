@@ -17,6 +17,7 @@
 #include "../interfaces/ApInterface.h"
 #include <string.h>
 #include <arpa/inet.h>
+#include "../drivers/swVersion.h"
 
 
 static void RegisterAllCommands(void);
@@ -29,6 +30,7 @@ static int CmdDevices(int argc, char **argv);
 static int CmdSsid(int argc, char **argv);
 static int CmdPassword(int argc, char **argv);
 static int CmdMaxConn(int argc, char **argv);
+static int CmdSwVersion(int argc, char **argv);
 static void RegisterStatus(void);
 static void RegisterReset(void);
 static void RegisterRestart(void);
@@ -38,6 +40,7 @@ static void RegisterDevices(void);
 static void RegisterSsid(void);
 static void RegisterPassword(void);
 static void RegisterMaxConn(void);
+static void RegisterSwVersion(void);
 
 
 static unsigned int CONSOLE_FLAGS = 0;
@@ -65,6 +68,7 @@ static void RegisterAllCommands(void)
     RegisterPassword();
     RegisterMaxConn();
     RegisterRestart();
+    RegisterSwVersion();
 }
 
 
@@ -406,4 +410,45 @@ static void RegisterMaxConn(void)
     };
 
     esp_console_cmd_register(&maxconn_cmd);
+}
+
+
+
+static int CmdSwVersion(int argc, char **argv)
+{
+    printf("\n---SW VERSION---\n");
+
+    char temp[VERSION_LEN];
+    int len;
+
+    GetMajorVersion(temp, &len);
+    printf("v%s.", temp);
+
+    GetMinorVersion(temp, &len);
+    printf("%s.", temp);
+
+    GetBuildDate(temp, &len);
+    printf("%s", temp);
+
+    GetBuildTime(temp, &len);
+    printf("%s\n\n", temp);
+
+
+    return 0;
+}
+
+
+
+static void RegisterSwVersion(void)
+{
+    const esp_console_cmd_t swver_cmd =
+    {
+        .command = "version",
+        .help = "Show version of the software.",
+        .hint = NULL,
+        .func = &CmdSwVersion,
+        .argtable = NULL
+    };
+
+    esp_console_cmd_register(&swver_cmd);
 }
