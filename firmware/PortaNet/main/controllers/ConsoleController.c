@@ -17,6 +17,7 @@
 #include "../interfaces/ApInterface.h"
 #include <string.h>
 #include <arpa/inet.h>
+#include "../drivers/swVersion.h"
 
 
 static void RegisterAllCommands(void);
@@ -29,6 +30,8 @@ static int CmdDevices(int argc, char **argv);
 static int CmdSsid(int argc, char **argv);
 static int CmdPassword(int argc, char **argv);
 static int CmdMaxConn(int argc, char **argv);
+static int CmdSwVersion(int argc, char **argv);
+static int CmdChannel(int argc, char **argv);
 static void RegisterStatus(void);
 static void RegisterReset(void);
 static void RegisterRestart(void);
@@ -38,6 +41,8 @@ static void RegisterDevices(void);
 static void RegisterSsid(void);
 static void RegisterPassword(void);
 static void RegisterMaxConn(void);
+static void RegisterSwVersion(void);
+static void RegisterChannel(void);
 
 
 static unsigned int CONSOLE_FLAGS = 0;
@@ -65,6 +70,8 @@ static void RegisterAllCommands(void)
     RegisterPassword();
     RegisterMaxConn();
     RegisterRestart();
+    RegisterSwVersion();
+    RegisterChannel();
 }
 
 
@@ -74,10 +81,12 @@ static int CmdStatus(int argc, char **argv)
     unsigned int NumConn;
     char ssid[SSID_LENGTH];
     char password[PASSWORD_LENGTH];
+    uint8_t channel;
 
     NumConn = GetMaxConnections();
     GetSsid(ssid);
     GetPassword(password);
+    channel = GetWifiChannel();
 
 
     printf("\n---SSID---\n");
@@ -86,6 +95,8 @@ static int CmdStatus(int argc, char **argv)
     printf("%s\n\n", password);
     printf("---MAX CONNECTIONS---\n");
     printf("%u\n\n", NumConn);
+    printf("---WIFI CHANNEL---\n");
+    printf("%u\n\n", channel);
 
     return 0;
 }
@@ -406,4 +417,91 @@ static void RegisterMaxConn(void)
     };
 
     esp_console_cmd_register(&maxconn_cmd);
+}
+
+
+
+static int CmdSwVersion(int argc, char **argv)
+{
+    printf("\n---SW VERSION---\n");
+
+    char temp[VERSION_LEN];
+    int len;
+
+    GetMajorVersion(temp, &len);
+    printf("v%s.", temp);
+
+    GetMinorVersion(temp, &len);
+    printf("%s.", temp);
+
+    GetBuildDate(temp, &len);
+    printf("%s", temp);
+
+    GetBuildTime(temp, &len);
+    printf("%s\n\n", temp);
+
+
+    return 0;
+}
+
+
+
+static void RegisterSwVersion(void)
+{
+    const esp_console_cmd_t swver_cmd =
+    {
+        .command = "version",
+        .help = "Show version of the software.",
+        .hint = NULL,
+        .func = &CmdSwVersion,
+        .argtable = NULL
+    };
+
+    esp_console_cmd_register(&swver_cmd);
+}
+
+
+
+static struct
+{
+    struct arg_int *channel;
+    struct arg_end *end;
+} channel_args;
+
+static int CmdChannel(int argc, char **argv)
+{
+    int nerrors = arg_parse(argc, argv, (void **)&channel_args);
+    if (nerrors != 0)
+    {
+        arg_print_errors(stderr, channel_args.end, argv[0]);
+        return 1;
+    }
+
+    if (ReqNewWifiChannel(channel_args.channel->ival[0]))
+        printf("\nSuccessfully requested new wifi channel of %i\n\n", channel_args.channel->ival[0]);
+
+    else
+        printf("\nFailed to request new wifi channel of %i\n\n", channel_args.channel->ival[0]);
+
+
+    return 0;
+}
+
+
+
+static void RegisterChannel(void)
+{
+    channel_args.channel = arg_int0(NULL, NULL, "<#>", "Wifi Channel number.");
+    channel_args.end = arg_end(2);
+
+    const esp_console_cmd_t channel_cmd =
+    {
+        .command = "channel",
+        .help = "Request new wifi channel for AP and restart the AP.",
+        .hint = NULL,
+        .func = &CmdChannel,
+        .argtable = &channel_args
+    };
+
+    esp_console_cmd_register(&channel_cmd);
 }

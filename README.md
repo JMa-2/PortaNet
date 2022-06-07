@@ -165,6 +165,12 @@ Request new number of max connection of the AP.
 `restart`<br>
 Request the AP to restart.
 
+`version`<br>
+Request the current software version.
+
+`channel <#>`<br>
+Request new wifi channel of the AP.
+
 
 <br>
 <br>

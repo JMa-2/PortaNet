@@ -125,6 +125,23 @@ void GetStaList(uint8_t* macbuffer, uint32_t* ipbuffer);
 bool ReqFactoryReset(void);
 
 
+/**
+ * @brief request new wifi channel (1-11)
+ * 
+ * @param channel new channel value to use
+ * @return true if request accepted
+ * @return false if request denied
+ */
+bool ReqNewWifiChannel(uint8_t channel);
+
+
+/**
+ * @brief Get the current Wifi Channel 
+ * 
+ * @return uint8_t wifi channel
+ */
+uint8_t GetWifiChannel(void);
+
 
 
 

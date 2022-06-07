@@ -10,12 +10,14 @@
 #define MIN_PASSWORD_LENGTH     10 //bytes
 #define MAX_NUMCONNECTIONS      10
 #define MIN_NUMCONNECTIONS      2
+#define MIN_WIFI_CHANNEL        3
+#define MAX_WIFI_CHANNEL        7
+#define WIFI_CHANNEL_ERROR      2   //TODO: figure out why this is needed
 
 #define DEFAULT_SSID                "DefaultSsid"
 #define DEFAULT_PASSWORD            "1234567890"
 #define DEFAULT_NUMCONNECTIONS      3
-
-#define WIFI_CHANNEL    0
+#define DEFAULT_WIFI_CHANNEL        1
 
 enum ApFlags {
     AP_FLAG_NET_UP      = 0b1 << 0,
@@ -25,7 +27,8 @@ enum ApFlags {
     AP_FLAG_NEW_MAXCONN = 0b1 << 4,
     AP_FLAG_REQ_OFF     = 0b1 << 5,
     AP_FLAG_REQ_ON      = 0b1 << 6,
-    AP_FLAG_REQ_RESET   = 0b1 << 7
+    AP_FLAG_REQ_RESET   = 0b1 << 7,
+    AP_FLAG_NEW_CHANNEL = 0b1 << 8
 };
 
 
@@ -33,6 +36,7 @@ typedef struct ApData{
     char ssid[MAX_SSID_LENGTH];
     char password[MAX_PASSWORD_LENGTH];
     uint8_t maxConn;
+    uint8_t channel;
 }ApData;
 
 
@@ -113,6 +117,14 @@ void PassPassword(char *str);
  * @param ipbuffer buffer to pass the ips
  */
 void PassStaInfo(uint8_t* macbuffer, uint32_t* ipbuffer);
+
+
+/**
+ * @brief pass the current wifi channel to the interface
+ * 
+ * @return uint8_t current wifi channel
+ */
+uint8_t PassWifiChannel(void);
 
 
 

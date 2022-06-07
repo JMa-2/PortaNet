@@ -161,3 +161,26 @@ bool ReqFactoryReset(void)
     return SetApFlag(AP_FLAG_REQ_RESET);
 }
 
+
+
+bool ReqNewWifiChannel(uint8_t channel)
+{
+    if ((channel > MAX_WIFI_CHANNEL) || (channel < MIN_WIFI_CHANNEL))
+        return false;
+
+    if (IsApFlagSet(AP_FLAG_NEW_CHANNEL))
+        return false;
+
+    ApDataBuffer.channel = channel-WIFI_CHANNEL_ERROR;
+    SetApFlag(AP_FLAG_NEW_CHANNEL);
+
+    return true;    
+}
+
+
+
+uint8_t GetWifiChannel(void)
+{
+    return PassWifiChannel();
+}
+
