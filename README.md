@@ -1,4 +1,6 @@
-# *TABLE OF CONTENTS*
+# ***PortaNet Guide***
+---
+## *TABLE OF CONTENTS*
 - [Introduction](#introduction)
 - [Hardware](#hardware)
     - [Hardware General](#hardware-general)
@@ -19,7 +21,7 @@
 <br>
 <br>
 
-# *INTRODUCTION*
+## *INTRODUCTION*
 The PortaNet is a wifi access point (AP) using the Espressif ESP32-C3FH4 microcontroller. The PortaNet holds the shape and connection types of a typical USB stick. The AP's settings can be modified via a serial console. At this point PuTTy is the only tested terminal emulator software for use with PortaNet.
 
 <br>
@@ -30,11 +32,11 @@ The PortaNet is a wifi access point (AP) using the Espressif ESP32-C3FH4 microco
 <br>
 <br>
 
-# *HARDWARE*
+## *HARDWARE*
 ### Hardware General
 The critical component consists of the [Espressif ESP32-C3FH4](https://www.espressif.com/en/products/socs/esp32-c3). The ESP32-C3FH4 microcontroller is a ESP32-C3 variant with 4MB internal flash. Simply buying the "normal" ESP32-C3 variant will not suffice due to the lack of internal flash.
 
-The design utilizes a 50 $\Omega$ impedance, 2.4 GHz wifi antenna. Antennas such as [this](https://www.amazon.com/gp/product/B07D1Z3W7T/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) and [this](https://www.amazon.com/gp/product/B0991PKTDL/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) have worked successfully. There is an unused $\pi$-matching circuit that could aid in supporting other antennas.
+The design utilizes a 50 &Omega; impedance, 2.4 GHz wifi antenna. Antennas such as [this](https://www.amazon.com/gp/product/B07D1Z3W7T/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) and [this](https://www.amazon.com/gp/product/B0991PKTDL/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) have worked successfully. There is an unused &pi;-matching circuit that could aid in supporting other antennas.
 
 ### Hardware Tools
 KiCad v6 was utilized as the EDA tool. The KiCad project can be found in the [hardware directory](hardware/kicad/PortaNet/). Additionally my [KiCad Library](http://192.168.1.19:3000/JMa/KiCad_Library) may contain needed symbols and footprints that the project references.
@@ -44,7 +46,7 @@ The current schematic can be seen [here](hardware/kicad/PortaNet_SCH.pdf).
 
 On page 2 of the schematic, the only oddity worth explaining is the NC of C2. Having C2 installed results in the GPIO9 (pin 15) being pulled low. Resulting in the firmware getting stuck in the bootloader.
 
-On page 3 of the schematic, lives the unused $\pi$-matching circuit labeled `Antenna`. If the $\pi$-matching circuit does not want to be used, then `L1` should be shorted with a 0 $\Omega$ resistor.
+On page 3 of the schematic, lives the unused &pi;-matching circuit labeled `Antenna`. If the &pi;-matching circuit does not want to be used, then `L1` should be shorted with a 0 &Omega; resistor.
 
 On page 3 also lives the `Crystal` section. While the load capacitors are labeled 7pF, 8pF caps work with no issues thus far. 
 
@@ -84,7 +86,7 @@ The BOM can be found [here](hardware/kicad/PortaNet/PortaNet.csv). As well as a 
 <br>
 <br>
 
-# *SOFTWARE*
+## *SOFTWARE*
 ### Software General
 The firmware is written in C using [Espressif's IOT Development Framework (ESP-IDF)](https://www.espressif.com/en/products/sdks/esp-idf#:~:text=ESP%2DIDF%20is%20Espressif's%20official,as%20C%20and%20C%2B%2B.). The software utilizes [FreeRTOS](https://www.freertos.org/) as part of the ESP-IDF as well. 
 
@@ -125,7 +127,7 @@ If issues arise, Espressif has good documentation located [here](https://docs.es
 <br>
 <br>
 
-# *HOW TO USE*
+## *HOW TO USE*
 ### Use General
 Since the device uses USB 2.0, the operating voltage is 5V. Typical PC USB receptacles work just fine and even phone/device charging bricks should work without issue. The device draws less that 100mA so there shouldn't be power rating issues to monitor.
 
